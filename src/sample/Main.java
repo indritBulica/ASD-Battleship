@@ -20,6 +20,7 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 
 
+
 public class Main extends Application
 {
     private Player player1 = new Player(true);
@@ -642,7 +643,5 @@ public class Main extends Application
     }
 
 
-    public static void main(String[] args){
-        launch(args);
-    }
+ 
 }
