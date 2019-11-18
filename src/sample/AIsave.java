@@ -3,17 +3,18 @@ package sample;
 public class AIsave
 {
     private int x,y;
+    private Point point = new Point(); 
     private Direction direction;
     private boolean water;
 
     public int getX()
     {
-        return x;
+        return this.point.xPosition;
     }
 
     public int getY()
     {
-        return y;
+        return this.point.yPosition;
     }
 
     public Direction getDirection()
@@ -36,31 +37,30 @@ public class AIsave
         this.water = water;
     }
 
-    public AIsave(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
+    public AIsave(int xPosition, int yPosition){
+        this.point.xPosition = xPosition;
+        this.point.yPosition = yPosition;
     }
 
-    public AIsave(int x, int y, Direction direction)
+    public AIsave(int xPosition, int yPosition, Direction direction)
     {
-        this.x = x;
-        this.y = y;
+        this.point.xPosition = xPosition;
+        this.point.yPosition = yPosition;
         this.direction = direction;
     }
 
-    public AIsave(int x, int y, boolean water)
+    public AIsave(int xPosition, int yPosition, boolean water)
     {
-        this.x = x;
-        this.y = y;
+        this.point.xPosition = xPosition;
+        this.point.yPosition = yPosition;
         this.water = water;
         direction=null;
     }
 
-    public AIsave(int x, int y, Direction direction, boolean water)
+    public AIsave(int xPosition, int yPosition, Direction direction, boolean water)
     {
-        this.x = x;
-        this.y = y;
+        this.point.xPosition = xPosition;
+        this.point.yPosition = yPosition;
         this.direction = direction;
         this.water = water;
     }
