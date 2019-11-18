@@ -44,7 +44,7 @@ public class Ship
 
     public ArrayList<ShipPart> getShipParts()
     {
-        return shipparts;
+        return ShipParts;
     }
 
     /*ist das unterste Level vom Schiff erstellen. Wird in der Ship Methode aufgerufen. Dort bekommt es die
@@ -54,7 +54,7 @@ public class Ship
     {
         for (int i = 0; i < length; i++)
         {
-            shipparts.add(new ShipPart(x, y));
+            ShipParts.add(new ShipPart(new Pixel(x, y)));
             switch (directions)
             {
                 case UP:
@@ -102,9 +102,9 @@ public class Ship
     Wenn es zutrifft, setzt es damage von dem Part auf true (das macht die destroy Methode in ShipPart)*/
     public boolean attack(int x, int y)
     {
-        for (ShipPart shippart : this.shipparts)
+        for (ShipPart shippart : this.ShipParts)
         {
-            if (shippart.getX() == x && shippart.getY() == y)
+            if (shippart._pixel.getX() == x && shippart._pixel.getY() == y)
             {
                 shippart.destroy();
                 return true;
@@ -119,7 +119,7 @@ public class Ship
   der Methode true raus. Sprich, Schiff ist zerstört.*/
     public boolean checkIfDestroyed()
     {
-        for (ShipPart shippart : this.shipparts)
+        for (ShipPart shippart : this.ShipParts)
         {
             if (!shippart.isDamaged())
             {
