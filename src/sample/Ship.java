@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Ship
 {
-    private ArrayList<ShipPart> shipparts = new ArrayList<>();
+    private ArrayList<ShipPart> ShipParts = new ArrayList<>();
+
     private int length;
     private int x;
     private int y;
