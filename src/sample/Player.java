@@ -3,26 +3,26 @@ package sample;
 import java.util.ArrayList;
 import java.util.Random;
 
-//In der Klasse sind alle Eigenschaften, die ein Player hat
+
 public class Player
 {
     Field area = new Field();
 
-    private ArrayList<AttackPositions> attackpositions = new ArrayList<>();
+    private ArrayList<AttackPositions> attackPositions = new ArrayList();
 
-    private ArrayList<AIsave> AIsave = null;
+   // private ArrayList<AIsave> AIsave = null;
 
     /*SaveAttack speichert alle Attacken in die Arraylist*/
     public void SaveAttack(int x, int y)
     {
-        this.attackpositions.add(new AttackPositions(x, y));
+        this.attackPositions.add(new AttackPositions(x, y));
     }
 
     /*Wir verhindern doppelten Angriff. Wir schauen, mit der foreach Schleife, ob die Übergebenen x,y von attackPossible
     schon in einer der gespeicherten Stellen in unserer ArrayList attackpositions enthalten ist.*/
     boolean attackPossible(int x, int y)
     {
-        for (AttackPositions a : this.attackpositions)
+        for (AttackPositions a : this.attackPositions)
         {
             if ((a.getX() == x) && (a.getY() == y))
             {
@@ -35,14 +35,14 @@ public class Player
     /*Reset überschreibt unsere Klassenarraylist, die wir oben erstellt haben, mit einer Leeren Arraylist --> Resetet es*/
     public void Reset()
     {
-        this.attackpositions = new ArrayList<>();
+        this.attackPositions = new ArrayList();
     }
 
-    public void setHuman(boolean human)
+    /*public void setHuman(boolean human)
     {
         isHuman = human;
     }
-
+*/
     private boolean isHuman;
 
     Player(boolean isHuman)
@@ -102,7 +102,7 @@ public class Player
             }
         } while (this.area.setShip(x, y, length, direction, 0, 0));
     }
-
+/*
     public boolean simpleAIAttack(Player enemy)
     {
         int x, y;
@@ -263,5 +263,5 @@ public class Player
 
         return false;
     }
-
+*/
 }
