@@ -359,7 +359,7 @@ public class Main extends Application
 
                 if (a != null)
                 {
-                    if (player.area.setShip(a[0], a[1], imageship.getLength(), imageship.getDirection(), imageship.getDiffvectorx(), imageship.getDiffvectory()))
+                    if (player.playfield.setShip(a[0], a[1], imageship.getLength(), imageship.getDirection(), imageship.getDiffvectorx(), imageship.getDiffvectory()))
                     {
                         // System.out.println("schiff angelegt");
                         imageship.lock();
@@ -382,7 +382,7 @@ public class Main extends Application
                 //   System.out.println("schiff deaktiviert");
             }
         }
-        if (player.area.isFleetComplete())
+        if (player.playfield.isFleetComplete())
         {
             gameround++;
             if (player == player1)
@@ -401,7 +401,7 @@ public class Main extends Application
 
 
             }
-            if (player1.area.isFleetComplete() && player2.area.isFleetComplete())
+            if (player1.playfield.isFleetComplete() && player2.playfield.isFleetComplete())
             {
                 activateMask();
             }
@@ -412,7 +412,7 @@ public class Main extends Application
     private void attacks(int x, int y)
     {
         int a[];
-        if (!(player1.area.gameOver() || player2.area.gameOver()))
+        if (!(player1.playfield.gameOver() || player2.playfield.gameOver()))
         {
             if (shipscomplete)
             {
@@ -423,12 +423,12 @@ public class Main extends Application
 
                     if (a != null)
                     {
-                        if (player1.attackPossible(a[0], a[1]))
+                        if (player1.isAttackPossible(a[0], a[1]))
                         {
-                            if (player2.area.attack(a[0], a[1]))
+                            if (player2.playfield.attack(a[0], a[1]))
                             {
                                 drawAttack(a[0], a[1], x, y, player2);
-                                player1.SaveAttack(a[0], a[1]);
+                                player1.saveAttack(a[0], a[1]);
                                 activateMask();
                                 bombplay.stop();
                                 bombplay.play();
@@ -436,7 +436,7 @@ public class Main extends Application
                             } else
                             {
                                 drawMiss(x, y);
-                                player1.SaveAttack(a[0], a[1]);
+                                player1.saveAttack(a[0], a[1]);
                                 activateMask();
                                 indicate1.setVisible(false);
                                 indicate2.setVisible(true);
@@ -445,7 +445,7 @@ public class Main extends Application
                             }
                         }
                     }
-                    if (player2.area.gameOver())
+                    if (player2.playfield.gameOver())
                     {
                         System.out.println("Spieler 1 hat gewonnen");
                         deactivateMask();
@@ -468,12 +468,12 @@ public class Main extends Application
                     a = calculateXY(x, y, 440 + 40 + 10 * 40 + 2 * 40, 40 + 40, 440 + 440 + 440 + 40, 440 + 40);
                     if (a != null)
                     {
-                        if (player2.attackPossible(a[0], a[1]))
+                        if (player2.isAttackPossible(a[0], a[1]))
                         {
-                            if (player1.area.attack(a[0], a[1]))
+                            if (player1.playfield.attack(a[0], a[1]))
                             {
                                 drawAttack(a[0], a[1], x, y, player1);
-                                player2.SaveAttack(a[0], a[1]);
+                                player2.saveAttack(a[0], a[1]);
                                 activateMask();
                                 bombplay.stop();
                                 bombplay.play();
@@ -481,7 +481,7 @@ public class Main extends Application
                             } else
                             {
                                 drawMiss(x, y);
-                                player2.SaveAttack(a[0], a[1]);
+                                player2.saveAttack(a[0], a[1]);
                                 activateMask();
                                 indicate1.setVisible(true);
                                 indicate2.setVisible(false);
@@ -491,7 +491,7 @@ public class Main extends Application
 
                         }
                     }
-                    if (player1.area.gameOver())
+                    if (player1.playfield.gameOver())
                     {
                         System.out.println("Spieler 2 hat gewonnen");
                         deactivateMask();
@@ -551,7 +551,7 @@ public class Main extends Application
         Image image = new Image("file:res/1x2_Ship_Destroyed.png");
         /*Objekt ship wird entweder null oder ein Schiff zugewiesen (Siehe Klasse Ship, Methode isDestroyed). Wenn
         das Schiff zerstört ist, wird im switch case gefragt welche Länge und dementsprechen setzen wir das Schiff*/
-        Ship ship = player.area.isDestroyed(xx, yy);
+        Ship ship = player.playfield.isDestroyed(xx, yy);
 
         if (ship != null)
         {
@@ -603,7 +603,7 @@ public class Main extends Application
     //Alle Schiffe beider Spieler sind gesetzt, dann true
     private void shipsComplete()
     {
-        if (player1.area.isFleetComplete() && player2.area.isFleetComplete())
+        if (player1.playfield.isFleetComplete() && player2.playfield.isFleetComplete())
         {
             this.shipscomplete = true;
         }
@@ -622,10 +622,10 @@ public class Main extends Application
             imageShip1[i].reset();
 
         }
-        player1.area.removeAll();
-        player2.area.removeAll();
-        player1.Reset();
-        player2.Reset();
+        player1.playfield.removeAll();
+        player2.playfield.removeAll();
+        player1.deleteAllAttacks();
+        player2.deleteAllAttacks();
         gameround = 1;
         shipscomplete = false;
         buttonSaveShipsRight.setVisible(true);
