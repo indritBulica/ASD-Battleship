@@ -7,11 +7,11 @@ public class Player
 {
     Field playfield = new Field();
 
-    private ArrayList<AttackPositions> savedAttackPositions = new ArrayList();
+    private ArrayList<Point> savedAttackPositions = new ArrayList();
 
     public void saveAttack(Point newAttackPosition)
     {
-        this.savedAttackPositions.add(new AttackPositions(newAttackPosition));
+        this.savedAttackPositions.add(newAttackPosition);
     }
 
     boolean isAttackPossible(Point positionToCheck)
