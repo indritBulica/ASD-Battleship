@@ -1,20 +1,21 @@
 package sample;
+import java.awt.Point;
 
 public class AIsave
 {
-    private int x,y;
+    //private int x,y;
     private Point point = new Point(); 
     private Direction direction;
     private boolean water;
 
     public int getX()
     {
-        return this.point.xPosition;
+        return this.point.x;
     }
 
     public int getY()
     {
-        return this.point.yPosition;
+        return this.point.y;
     }
 
     public Direction getDirection()
@@ -38,29 +39,29 @@ public class AIsave
     }
 
     public AIsave(int xPosition, int yPosition){
-        this.point.xPosition = xPosition;
-        this.point.yPosition = yPosition;
+        this.point.x = xPosition;
+        this.point.y = yPosition;
     }
 
     public AIsave(int xPosition, int yPosition, Direction direction)
     {
-        this.point.xPosition = xPosition;
-        this.point.yPosition = yPosition;
+        this.point.x = xPosition;
+        this.point.y = yPosition;
         this.direction = direction;
     }
 
     public AIsave(int xPosition, int yPosition, boolean water)
     {
-        this.point.xPosition = xPosition;
-        this.point.yPosition = yPosition;
+        this.point.x = xPosition;
+        this.point.y = yPosition;
         this.water = water;
         direction=null;
     }
 
     public AIsave(int xPosition, int yPosition, Direction direction, boolean water)
     {
-        this.point.xPosition = xPosition;
-        this.point.yPosition = yPosition;
+        this.point.x = xPosition;
+        this.point.y = yPosition;
         this.direction = direction;
         this.water = water;
     }

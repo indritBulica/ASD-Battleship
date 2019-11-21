@@ -1,10 +1,15 @@
 package sample;
 
 import java.util.ArrayList;
-
+import java.awt.Point;
 
 public class Player
 {
+    private boolean isHuman;
+    Player(boolean isHuman)
+    {
+        this.isHuman = isHuman;
+    }
     Field playfield = new Field();
 
     private ArrayList<Point> savedAttackPositions = new ArrayList();

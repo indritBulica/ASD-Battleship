@@ -1,24 +1,23 @@
 package sample;
 
-
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
-
+import java.awt.Point;
 
 
 public class Main extends Application
@@ -423,12 +422,12 @@ public class Main extends Application
 
                     if (a != null)
                     {
-                        if (player1.isAttackPossible(a[0], a[1]))
+                        if (player1.isAttackPossible(new Point(a[0], a[1])))
                         {
                             if (player2.playfield.attack(a[0], a[1]))
                             {
                                 drawAttack(a[0], a[1], x, y, player2);
-                                player1.saveAttack(a[0], a[1]);
+                                player1.saveAttack(new Point(a[0], a[1]));
                                 activateMask();
                                 bombplay.stop();
                                 bombplay.play();
@@ -436,7 +435,7 @@ public class Main extends Application
                             } else
                             {
                                 drawMiss(x, y);
-                                player1.saveAttack(a[0], a[1]);
+                                player1.saveAttack(new Point(a[0], a[1]));
                                 activateMask();
                                 indicate1.setVisible(false);
                                 indicate2.setVisible(true);
@@ -468,12 +467,13 @@ public class Main extends Application
                     a = calculateXY(x, y, 440 + 40 + 10 * 40 + 2 * 40, 40 + 40, 440 + 440 + 440 + 40, 440 + 40);
                     if (a != null)
                     {
-                        if (player2.isAttackPossible(a[0], a[1]))
+                        if (player2.isAttackPossible(new Point(a[0], a[1])))
                         {
                             if (player1.playfield.attack(a[0], a[1]))
                             {
+
                                 drawAttack(a[0], a[1], x, y, player1);
-                                player2.saveAttack(a[0], a[1]);
+                                player2.saveAttack(new Point( a[0], a[1]));
                                 activateMask();
                                 bombplay.stop();
                                 bombplay.play();
@@ -481,7 +481,7 @@ public class Main extends Application
                             } else
                             {
                                 drawMiss(x, y);
-                                player2.saveAttack(a[0], a[1]);
+                                player2.saveAttack(new Point(a[0], a[1]));
                                 activateMask();
                                 indicate1.setVisible(true);
                                 indicate2.setVisible(false);
