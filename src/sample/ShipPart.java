@@ -27,4 +27,12 @@ public class ShipPart
     {
         this.damage = true;
     }
+
+    public int getX() {
+       return _pixel.getX();
+    }
+
+    public int getY() {
+       return _pixel.getY();
+    }
 }
