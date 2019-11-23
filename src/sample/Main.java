@@ -16,8 +16,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
-import java.awt.Point;
 
 
 public class Main extends Application
@@ -376,10 +376,9 @@ public class Main extends Application
                     imageship.rotateTo(Direction.RIGHT);
 
                 }
-            } else
-            {
-                //   System.out.println("schiff deaktiviert");
             }
+            //   System.out.println("schiff deaktiviert");
+
         }
         if (player.playfield.isFleetComplete())
         {

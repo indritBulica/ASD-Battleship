@@ -5,10 +5,8 @@ import java.awt.Point;
 
 public class Player
 {
-    private boolean isHuman;
     Player(boolean isHuman)
     {
-        this.isHuman = isHuman;
     }
     Field playfield = new Field();
 
@@ -21,10 +19,7 @@ public class Player
 
     boolean isAttackPossible(Point positionToCheck)
     {
-        if (this.savedAttackPositions.contains(positionToCheck)){
-            return false;
-        }
-        return true;
+        return !this.savedAttackPositions.contains(positionToCheck);
     }
 
     public void deleteAllAttacks()
