@@ -22,8 +22,8 @@ import java.io.File;
 
 public class Main extends Application
 {
-    private Player player1 = new Player(true);
-    private Player player2 = new Player(true);
+    private Player player1 = new Player();
+    private Player player2 = new Player();
     private double pressedX, pressedY;
     private int gameround = 1;
     private boolean shipscomplete = false; //zu testzwecken auf true später muss auf false gestellt werden
@@ -612,6 +612,7 @@ public class Main extends Application
     //Für einzelne Methoden, siehe entsprechende Klassen. Canvas wird zurückgesetzt
     private void reset()
     {
+
         for (int i = 0; i < imageShip0.length; i++)
         {
             imageShip1[i].rotateTo(Direction.RIGHT);
@@ -639,5 +640,7 @@ public class Main extends Application
         reset.setVisible(true);
         startmenu.setVisible(false);
     }
+
+
  
 }

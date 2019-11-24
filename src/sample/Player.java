@@ -5,9 +5,7 @@ import java.awt.Point;
 
 public class Player
 {
-    Player(boolean isHuman)
-    {
-    }
+    Player(){}
     Field playfield = new Field();
 
     private ArrayList<Point> savedAttackPositions = new ArrayList();
