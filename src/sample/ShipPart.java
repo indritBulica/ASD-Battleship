@@ -5,28 +5,15 @@ public class ShipPart
     /*Jeder Teil vom Schiff (in unserem Fall ist jeder Teil genau 40pixel lang) hat die Eigenschaften von der Klasse
     ShipPart*/
 
-    private int x;
-    private int y;
-    private boolean damage;
+    public Pixel _pixel;
+    private boolean damage = false;
 
-    public int getX()
+    public ShipPart(Pixel pixel)
     {
-        return x;
-    }
-
-    public int getY()
-    {
-        return y;
-    }
-
-    public ShipPart(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-        this.damage = false;
+        _pixel = pixel;
 
         /*Dient der Ausgabe für uns, zum testen*/
-        System.out.println(" schiffteil an X= " + this.x + " Y =" + this.y + " schaden= " + this.damage);
+        System.out.printf("Schiffteil an X = %f Y = %f Schaden = %s", _pixel.getX(), _pixel.getY(), this.damage);
     }
 
     /*ist dieser Teil vom Schiff zerstört?*/
@@ -41,4 +28,11 @@ public class ShipPart
         this.damage = true;
     }
 
+    public int getX() {
+       return _pixel.getX();
+    }
+
+    public int getY() {
+       return _pixel.getY();
+    }
 }

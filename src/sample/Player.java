@@ -1,59 +1,35 @@
 package sample;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.awt.Point;
 
-//In der Klasse sind alle Eigenschaften, die ein Player hat
 public class Player
 {
-    Field area = new Field();
+    Player(){}
+    Field playfield = new Field();
 
-    private ArrayList<AttackPositions> attackpositions = new ArrayList<>();
+    private ArrayList<Point> savedAttackPositions = new ArrayList();
 
-    private ArrayList<AIsave> AIsave = null;
-
-    /*SaveAttack speichert alle Attacken in die Arraylist*/
-    public void SaveAttack(int x, int y)
+    public void saveAttack(Point newAttackPosition)
     {
-        this.attackpositions.add(new AttackPositions(x, y));
+        this.savedAttackPositions.add(newAttackPosition);
     }
 
-    /*Wir verhindern doppelten Angriff. Wir schauen, mit der foreach Schleife, ob die Übergebenen x,y von attackPossible
-    schon in einer der gespeicherten Stellen in unserer ArrayList attackpositions enthalten ist.*/
-    boolean attackPossible(int x, int y)
+    boolean isAttackPossible(Point positionToCheck)
     {
-        for (AttackPositions a : this.attackpositions)
-        {
-            if ((a.getX() == x) && (a.getY() == y))
-            {
-                return false;
-            }
-        }
-        return true;
+        return !this.savedAttackPositions.contains(positionToCheck);
     }
 
-    /*Reset überschreibt unsere Klassenarraylist, die wir oben erstellt haben, mit einer Leeren Arraylist --> Resetet es*/
-    public void Reset()
+    public void deleteAllAttacks()
     {
-        this.attackpositions = new ArrayList<>();
+        this.savedAttackPositions = new ArrayList();
     }
 
-    public void setHuman(boolean human)
-    {
-        isHuman = human;
-    }
-
-    private boolean isHuman;
-
-    Player(boolean isHuman)
-    {
-        this.isHuman = isHuman;
-    }
 
 
     //Ab hier ist AI (ist nicht implementiert)
 
-
+/*
     public boolean AISet()
     {
         if (!isHuman)
@@ -100,7 +76,7 @@ public class Player
                     direction = Direction.DOWN;
                     break;
             }
-        } while (this.area.setShip(x, y, length, direction, 0, 0));
+        } while (this.playfield.setShip(x, y, length, direction, 0, 0));
     }
 
     public boolean simpleAIAttack(Player enemy)
@@ -263,5 +239,5 @@ public class Player
 
         return false;
     }
-
+*/
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Field
 {
-    private ArrayList<Ship> fleet = new ArrayList<>();
+    private ArrayList<Ship> fleet = new ArrayList();
 
     public ArrayList<Ship> getFleet()
     {

@@ -1,19 +1,21 @@
 package sample;
+import java.awt.Point;
 
 public class AIsave
 {
-    private int x,y;
+    //private int x,y;
+    private Point point = new Point(); 
     private Direction direction;
     private boolean water;
 
     public int getX()
     {
-        return x;
+        return this.point.x;
     }
 
     public int getY()
     {
-        return y;
+        return this.point.y;
     }
 
     public Direction getDirection()
@@ -36,31 +38,38 @@ public class AIsave
         this.water = water;
     }
 
-    public AIsave(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
+// --Commented out by Inspection START (23.11.2019 10:53):
+    public AIsave(int xPosition, int yPosition){
+// --Commented out by Inspection START (23.11.2019 10:53):
+        this.point.x = xPosition;
+        this.point.y = yPosition;
     }
-
-    public AIsave(int x, int y, Direction direction)
+//// --Commented out by Inspection STOP (23.11.2019 10:53)
+//
+//// --Commented out by Inspection START (23.11.2019 10:53):
+    public AIsave(int xPosition, int yPosition, Direction direction)
+// --Commented out by Inspection STOP (23.11.2019 10:53)
+// --Commented out by Inspection START (23.11.2019 10:53):
     {
-        this.x = x;
-        this.y = y;
+        this.point.x = xPosition;
+        this.point.y = yPosition;
         this.direction = direction;
     }
-
-    public AIsave(int x, int y, boolean water)
+////
+    public AIsave(int xPosition, int yPosition, boolean water)
     {
-        this.x = x;
-        this.y = y;
+        this.point.x = xPosition;
+// --Commented out by Inspection STOP (23.11.2019 10:53)
+// --Commented out by Inspection STOP (23.11.2019 10:53)
+        this.point.y = yPosition;
         this.water = water;
         direction=null;
     }
 
-    public AIsave(int x, int y, Direction direction, boolean water)
+    public AIsave(int xPosition, int yPosition, Direction direction, boolean water)
     {
-        this.x = x;
-        this.y = y;
+        this.point.x = xPosition;
+        this.point.y = yPosition;
         this.direction = direction;
         this.water = water;
     }

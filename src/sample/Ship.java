@@ -4,21 +4,22 @@ import java.util.ArrayList;
 
 public class Ship
 {
-    private ArrayList<ShipPart> shipparts = new ArrayList<>();
+    private ArrayList<ShipPart> ShipParts = new ArrayList<>();
+
     private int length;
-    private int x;
-    private int y;
+    private int xPosition;
+    private int yPosition;
     private Direction direction;
     private int divx, divy;
 
     public int getX()
     {
-        return x;
+        return xPosition;
     }
 
     public int getY()
     {
-        return y;
+        return yPosition;
     }
 
     public int getDivx()
@@ -43,7 +44,7 @@ public class Ship
 
     public ArrayList<ShipPart> getShipParts()
     {
-        return shipparts;
+        return ShipParts;
     }
 
     /*ist das unterste Level vom Schiff erstellen. Wird in der Ship Methode aufgerufen. Dort bekommt es die
@@ -53,7 +54,7 @@ public class Ship
     {
         for (int i = 0; i < length; i++)
         {
-            shipparts.add(new ShipPart(x, y));
+            ShipParts.add(new ShipPart(new Pixel(x, y)));
             switch (directions)
             {
                 case UP:
@@ -82,8 +83,8 @@ public class Ship
      Schichten hinunter. */
     public Ship(int x, int y, int length, Direction directions, int diffvectorx, int diffvectory)
     {
-        this.x = x;
-        this.y = y;
+        this.xPosition = x;
+        this.yPosition = y;
         this.direction = directions;
         this.length = length;
         this.divx = diffvectorx;
@@ -92,7 +93,7 @@ public class Ship
         generateShip(x, y, length, directions);
 
         /*Dient nur der Ausgabe für uns zum testen*/
-        System.out.println("ich generiere schiff an X= " + this.x + " Y =" + this.y + " richtung" + this.direction + " länge =" + this.length);
+        System.out.println("ich generiere schiff an X= " + this.xPosition + " Y =" + this.yPosition + " richtung" + this.direction + " länge =" + this.length);
     }
 
     /*Die Schleife geht jeden part vom Schiff durch. Die if Bedienung checkt für jeden part (das macht es bei jedem
@@ -101,9 +102,9 @@ public class Ship
     Wenn es zutrifft, setzt es damage von dem Part auf true (das macht die destroy Methode in ShipPart)*/
     public boolean attack(int x, int y)
     {
-        for (ShipPart shippart : this.shipparts)
+        for (ShipPart shippart : this.ShipParts)
         {
-            if (shippart.getX() == x && shippart.getY() == y)
+            if (shippart._pixel.getX() == x && shippart._pixel.getY() == y)
             {
                 shippart.destroy();
                 return true;
@@ -118,7 +119,7 @@ public class Ship
   der Methode true raus. Sprich, Schiff ist zerstört.*/
     public boolean checkIfDestroyed()
     {
-        for (ShipPart shippart : this.shipparts)
+        for (ShipPart shippart : this.ShipParts)
         {
             if (!shippart.isDamaged())
             {

@@ -1,9 +1,9 @@
 package sample;
 
-/*Ganz kurz erklÃ¤rt: enum (enumeration --> AufzÃ¤hlung) kann alles sein. Wir legen fest, Objekte dieser Klasse dÃ¼rfen
-nur die Vier Werte annehmen. FÃ¼r Java bedeuten die WÃ¶rter selbst gar nichts, das ist nur fÃ¼r uns. Da kÃ¶nnte auch
-"NORDEN, SÃœDEN, WESTEN, OSTEN" oder verschiedene Schwierigkeiten bei einem Spiel ("HARD, EASY....") stehen (wÃ¼rde bei
- uns natÃ¼rlich keinen Sinn ergeben)*/
+/*Ganz kurz erklärt: enum (enumeration --> Aufzählung) kann alles sein. Wir legen fest, Objekte dieser Klasse dürfen
+nur die Vier Werte annehmen. Für Java bedeuten die Wörter selbst gar nichts, das ist nur für uns. Da könnte auch
+"NORDEN, SÜDEN, WESTEN, OSTEN" oder verschiedene Schwierigkeiten bei einem Spiel ("HARD, EASY....") stehen (würde bei
+ uns natürlich keinen Sinn ergeben)*/
 public enum Direction
 {
     UP, DOWN, RIGHT, LEFT
