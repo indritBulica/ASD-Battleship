@@ -612,7 +612,6 @@ public class Main extends Application
     //Für einzelne Methoden, siehe entsprechende Klassen. Canvas wird zurückgesetzt
     private void reset()
     {
-
         for (int i = 0; i < imageShip0.length; i++)
         {
             imageShip1[i].rotateTo(Direction.RIGHT);
@@ -640,7 +639,5 @@ public class Main extends Application
         reset.setVisible(true);
         startmenu.setVisible(false);
     }
-
-
  
 }
