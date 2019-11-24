@@ -7,19 +7,19 @@ public class Ship
     private ArrayList<ShipPart> ShipParts = new ArrayList<>();
 
     private int length;
-    private int x;
-    private int y;
+    private int xPosition;
+    private int yPosition;
     private Direction direction;
     private int divx, divy;
 
     public int getX()
     {
-        return x;
+        return xPosition;
     }
 
     public int getY()
     {
-        return y;
+        return yPosition;
     }
 
     public int getDivx()
@@ -83,8 +83,8 @@ public class Ship
      Schichten hinunter. */
     public Ship(int x, int y, int length, Direction directions, int diffvectorx, int diffvectory)
     {
-        this.x = x;
-        this.y = y;
+        this.xPosition = x;
+        this.yPosition = y;
         this.direction = directions;
         this.length = length;
         this.divx = diffvectorx;
@@ -93,7 +93,7 @@ public class Ship
         generateShip(x, y, length, directions);
 
         /*Dient nur der Ausgabe für uns zum testen*/
-        System.out.println("ich generiere schiff an X= " + this.x + " Y =" + this.y + " richtung" + this.direction + " länge =" + this.length);
+        System.out.println("ich generiere schiff an X= " + this.xPosition + " Y =" + this.yPosition + " richtung" + this.direction + " länge =" + this.length);
     }
 
     /*Die Schleife geht jeden part vom Schiff durch. Die if Bedienung checkt für jeden part (das macht es bei jedem
