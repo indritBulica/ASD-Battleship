@@ -119,71 +119,66 @@ public class ImageShip
         // System.out.println("x= " + this.x + "y= " + this.y);
 
 
-        imageView.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent event)
+        imageView.addEventHandler(MouseEvent.ANY, event -> {
+            //Nur wenn Schiff lock==false (unten bei lock erklärt)
+            if (!disable)
             {
-                //Nur wenn Schiff lock==false (unten bei lock erklärt)
-                if (!disable)
+                if (event.getEventType() == MouseEvent.MOUSE_PRESSED && event.getButton().equals(MouseButton.PRIMARY))
                 {
-                    if (event.getEventType() == MouseEvent.MOUSE_PRESSED && event.getButton().equals(MouseButton.PRIMARY))
+                    //Koordinaten vom Mouseclick
+                    startX = event.getSceneX();
+                    startY = event.getSceneY();
+
+                    //Koordinaten vom Bild was geklickt wurde (schätze ich, bitte noch bestätigen!)
+                    moveX = ((ImageView) (event.getSource())).getTranslateX();
+                    moveY = ((ImageView) (event.getSource())).getTranslateY();
+
+                }
+                if (event.getEventType() == MouseEvent.MOUSE_DRAGGED && event.getButton().equals(MouseButton.PRIMARY))
+                {
+                    //Differenz der Koordinaten von der Maus, wo wir losgelassen haben und angefangen haben
+                    setX = event.getSceneX() - startX;
+                    setY = event.getSceneY() - startY;
+
+                    //Die Differenz zwischen Bild Anfang und wie weit die maus gedragged wurde
+                    newX = moveX + setX;
+                    newY = moveY + setY;
+
+                    /*wir runden es, damit es durch 40 teilbar ist (weil alle Felder durch 40 teilbar sind)*/
+                    int diffx = (int) newX % 40;
+                    newX = newX - diffx;
+
+                    int diffy = (int) newY % 40;
+                    newY = newY - diffy;
+
+
+                    ((ImageView) (event.getSource())).setTranslateX(newX);
+                    ((ImageView) (event.getSource())).setTranslateY(newY);
+
+                    /*Alle Faktoren werden berücksichtigt, damit die neuen Koordinaten stimmen, muss auch die
+                    errechnete differenz vom rotieren mit einbezogen werden.*/
+                    setX(beginX + getDiffvectorx() + (int) newX);
+                    setY(beginY + getDiffvectory() + (int) newY);
+
+
+                    int[] a = calculateXY(getX(), getY());
+                    if (a != null)
                     {
-                        //Koordinaten vom Mouseclick
-                        startX = event.getSceneX();
-                        startY = event.getSceneY();
-
-                        //Koordinaten vom Bild was geklickt wurde (schätze ich, bitte noch bestätigen!)
-                        moveX = ((ImageView) (event.getSource())).getTranslateX();
-                        moveY = ((ImageView) (event.getSource())).getTranslateY();
-
+                        System.out.println("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
                     }
-                    if (event.getEventType() == MouseEvent.MOUSE_DRAGGED && event.getButton().equals(MouseButton.PRIMARY))
+                }
+                if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton().equals(MouseButton.SECONDARY))
+                {
+                    /*
+                    System.out.println("echt x= " + getX() + "y= " + getY());
+                    int a[] = calculateXY(getX(), getY(), 440 + 40, 40 + 440 + 40 + 40, 440 + 440, 40 + 920);
+                    if (a != null)
                     {
-                        //Differenz der Koordinaten von der Maus, wo wir losgelassen haben und angefangen haben
-                        setX = event.getSceneX() - startX;
-                        setY = event.getSceneY() - startY;
-
-                        //Die Differenz zwischen Bild Anfang und wie weit die maus gedragged wurde
-                        newX = moveX + setX;
-                        newY = moveY + setY;
-
-                        /*wir runden es, damit es durch 40 teilbar ist (weil alle Felder durch 40 teilbar sind)*/
-                        int diffx = (int) newX % 40;
-                        newX = newX - diffx;
-
-                        int diffy = (int) newY % 40;
-                        newY = newY - diffy;
-
-
-                        ((ImageView) (event.getSource())).setTranslateX(newX);
-                        ((ImageView) (event.getSource())).setTranslateY(newY);
-
-                        /*Alle Faktoren werden berücksichtigt, damit die neuen Koordinaten stimmen, muss auch die
-                        errechnete differenz vom rotieren mit einbezogen werden.*/
-                        setX(beginX + getDiffvectorx() + (int) newX);
-                        setY(beginY + getDiffvectory() + (int) newY);
-
-
-                        int a[] = calculateXY(getX(), getY(), 440 + 40, 40 + 440 + 40 + 40, 440 + 440, 40 + 920);
-                        if (a != null)
-                        {
-                            System.out.println("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
-                        }
+                        System.out.println("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
                     }
-                    if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton().equals(MouseButton.SECONDARY))
-                    {
-                        /*
-                        System.out.println("echt x= " + getX() + "y= " + getY());
-                        int a[] = calculateXY(getX(), getY(), 440 + 40, 40 + 440 + 40 + 40, 440 + 440, 40 + 920);
-                        if (a != null)
-                        {
-                            System.out.println("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
-                        }
-                        */
+                    */
 
-                        rotate();
-                    }
+                    rotate();
                 }
             }
         });
@@ -375,7 +370,7 @@ public class ImageShip
                 }
                 break;
         }
-        int[] a = calculateXY(getX(), getY(), 440 + 40, 40 + 440 + 40 + 40, 440 + 440, 40 + 920);
+        int[] a = calculateXY(getX(), getY());
         if (a != null)
         {
             System.out.println("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
@@ -397,14 +392,14 @@ public class ImageShip
 
 
     //Dient nur zum testen als Ausgabe
-    private int[] calculateXY(int x, int y, int p1x, int p1y, int p2x, int p2y)
+    private int[] calculateXY(int x, int y)
     {
-        int result[] = new int[2];
-        if (x >= p1x && x <= p2x && y >= p1y && y <= p2y)
+        int[] result = new int[2];
+        if (x >= 480 && x <= 880 && y >= 560 && y <= 960)
         {
             int vectorx, vectory;
-            vectorx = x - p1x;
-            vectory = y - p1y;
+            vectorx = x - 480;
+            vectory = y - 560;
             result[0] = vectorx / 40;
             result[1] = vectory / 40;
             return result;

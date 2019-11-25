@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Ship
 {
-    private ArrayList<ShipPart> ShipParts = new ArrayList<>();
+    private ArrayList<ShipPart> shipParts = new ArrayList<>();
 
     private int length;
     private int xPosition;
@@ -45,7 +45,7 @@ public class Ship
 
     public ArrayList<ShipPart> getShipParts()
     {
-        return ShipParts;
+        return shipParts;
     }
 
     /*ist das unterste Level vom Schiff erstellen. Wird in der Ship Methode aufgerufen. Dort bekommt es die
@@ -55,7 +55,7 @@ public class Ship
     {
         for (int i = 0; i < length; i++)
         {
-            ShipParts.add(new ShipPart(new Point(x, y)));
+            shipParts.add(new ShipPart(new Point(x, y)));
             switch (directions)
             {
                 case UP:
@@ -103,7 +103,7 @@ public class Ship
     Wenn es zutrifft, setzt es damage von dem Part auf true (das macht die destroy Methode in ShipPart)*/
     public boolean attack(int x, int y)
     {
-        for (ShipPart shippart : this.ShipParts)
+        for (ShipPart shippart : this.shipParts)
         {
             if (shippart._pixel.getX() == x && shippart._pixel.getY() == y)
             {
@@ -120,7 +120,7 @@ public class Ship
   der Methode true raus. Sprich, Schiff ist zerstört.*/
     public boolean checkIfDestroyed()
     {
-        for (ShipPart shippart : this.ShipParts)
+        for (ShipPart shippart : this.shipParts)
         {
             if (!shippart.isDamaged())
             {

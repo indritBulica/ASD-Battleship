@@ -25,17 +25,17 @@ public class Main extends Application
     private Player player1 = new Player();
     private Player player2 = new Player();
     private double pressedX, pressedY;
-    private int gameround = 1;
-    private boolean shipscomplete = false; //zu testzwecken auf true später muss auf false gestellt werden
+    private int gameRound = 1;
+    private boolean shipsComplete = false; //zu testzwecken auf true später muss auf false gestellt werden
 
     private Button buttonSaveShipsLeft = new Button("Schiffe speichern");
     private Button buttonSaveShipsRight = new Button("Schiffe Speichern");
-    private Button newGame = new Button("Neues Spiel");
-    private Button exit = new Button("Ka Lust mehr! EXIT");
-    private Button reset = new Button("Neustart");
-    private Button seeShips1 = new Button("Zeige meine Schiffe");
-    private Button seeShips2 = new Button("Zeige meine Schiffe");
-    private Button cont = new Button("Hier gehts weiter");
+    private Button buttonNewGame = new Button("Neues Spiel");
+    private Button buttonExit = new Button("EXIT");
+    private Button buttonReset = new Button("Neustart");
+    private Button buttonSeeShips1 = new Button("Zeige meine Schiffe");
+    private Button buttonSeeShips2 = new Button("Zeige meine Schiffe");
+    private Button buttonContinue = new Button("Hier gehts weiter");
 
     private ImageView startmenu = new ImageView("file:res/start.png");
     private ImageView wonleft = new ImageView("file:res/spieler1_gewonnen.png");
@@ -56,7 +56,7 @@ public class Main extends Application
     private Media winner = new Media(new File("res/winner.wav").toURI().toString());
     private MediaPlayer winnerplay = new MediaPlayer(winner);
 
-    private Image bships[] = {
+    private Image[] bships = {
             new Image("file:res/1x2_Schiff_Horizontal_1_Fertig.png"),
             new Image("file:res/1x3_Schiff_Horizontal_1_Fertig.png"),
             new Image("file:res/1x4_Schiff_Horizontal_1_Fertig.png"),
@@ -65,7 +65,7 @@ public class Main extends Application
 
 
     //Schiffe SPieler 1
-    ImageShip imageShip1[] = {
+    ImageShip[] imageShip1 = {
             new ImageShip(1520, 640, 2, bships[0]),
             new ImageShip(1520, 640, 2, bships[0]),
             new ImageShip(1520, 640, 2, bships[0]),
@@ -78,7 +78,7 @@ public class Main extends Application
             new ImageShip(1520, 880, 5, bships[3])
     };
     //Schiffe Spieler 2
-    ImageShip imageShip0[] = {
+    ImageShip[] imageShip0 = {
             new ImageShip(1800 - 1520 - 3 * 40, 640, 2, bships[0]),
             new ImageShip(1800 - 1520 - 3 * 40, 640, 2, bships[0]),
             new ImageShip(1800 - 1520 - 3 * 40, 640, 2, bships[0]),
@@ -92,7 +92,7 @@ public class Main extends Application
     };
 
 
-    private Pane battleshipcontainer = new Pane();
+    private Pane battleshipContainer = new Pane();
 
     private void drawGUI()
     {
@@ -101,22 +101,17 @@ public class Main extends Application
 
         for (int i = 0; i < imageShip0.length; i++)
         {
-            battleshipcontainer.getChildren().add(imageShip0[i].getImageView());
-            battleshipcontainer.getChildren().add(imageShip1[i].getImageView());
+            battleshipContainer.getChildren().add(imageShip0[i].getImageView());
+            battleshipContainer.getChildren().add(imageShip1[i].getImageView());
         }
 
-        battleshipcontainer.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent event)
+        battleshipContainer.addEventHandler(MouseEvent.ANY, event -> {
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
             {
-                if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
-                {
-                    pressedX = event.getSceneX();
-                    pressedY = event.getSceneY();
-                    //    System.out.println("x = " + pressedX + " y = " + pressedY);
-                    attacks((int) Math.round(pressedX), (int) Math.round(pressedY));
-                }
+                pressedX = event.getSceneX();
+                pressedY = event.getSceneY();
+                //    System.out.println("x = " + pressedX + " y = " + pressedY);
+                attacks((int) Math.round(pressedX), (int) Math.round(pressedY));
             }
         });
 
@@ -125,15 +120,10 @@ public class Main extends Application
         buttonSaveShipsLeft.setLayoutY(500);
         buttonSaveShipsLeft.setPrefSize(120, 10);
 
-        buttonSaveShipsLeft.setOnAction(new EventHandler<ActionEvent>()
-                                        {
-                                            @Override
-                                            public void handle(ActionEvent event)
-                                            {
-                                                saveShips(imageShip0, player1, 440 + 40, 40 + 440 + 40 + 40, 440 + 440, 40 + 920);
-                                                shipsComplete();
-                                            }
-                                        }
+        buttonSaveShipsLeft.setOnAction(event -> {
+            saveShips(imageShip0, player1, 440 + 40, 440 + 440);
+            shipsComplete();
+        }
         );
 
 
@@ -141,60 +131,41 @@ public class Main extends Application
         buttonSaveShipsRight.setLayoutY(500);
         buttonSaveShipsRight.setPrefSize(120, 10);
         buttonSaveShipsRight.setOnAction(
-                new EventHandler<ActionEvent>()
-                {
-                    @Override
-                    public void handle(ActionEvent event)
-                    {
-                        saveShips(imageShip1, player2, 2 * 440 + 40 + 40, 40 + 440 + 40 + 40, 440 + 440 + 40 + 440, 920 + 40);
-                        shipsComplete();
-                    }
+                event -> {
+                    saveShips(imageShip1, player2, 2 * 440 + 40 + 40, 440 + 440 + 40 + 440);
+                    shipsComplete();
                 }
         );
 
 
         startmenu.setVisible(true);
-        seeShips1.setLayoutX(1520);
-        seeShips1.setLayoutY(550);
-        seeShips1.setPrefSize(120, 10);
-        seeShips1.setOnAction(
-                new EventHandler<ActionEvent>()
-                {
-                    @Override
-                    public void handle(ActionEvent event)
-                    {
-                        changeMask();
-                    }
-                }
+        buttonSeeShips1.setLayoutX(1520);
+        buttonSeeShips1.setLayoutY(550);
+        buttonSeeShips1.setPrefSize(120, 10);
+        buttonSeeShips1.setOnAction(
+                event -> changeMask()
         );
 
-        seeShips2.setLayoutX(160);
-        seeShips2.setLayoutY(550);
-        seeShips2.setPrefSize(120, 10);
-        seeShips2.setOnAction(
-                new EventHandler<ActionEvent>()
-                {
-                    @Override
-                    public void handle(ActionEvent event)
-                    {
-                        changeMask();
-                    }
-                }
+        buttonSeeShips2.setLayoutX(160);
+        buttonSeeShips2.setLayoutY(550);
+        buttonSeeShips2.setPrefSize(120, 10);
+        buttonSeeShips2.setOnAction(
+                event -> changeMask()
         );
 
         indicate1.setFill(Color.RED);
         indicate2.setFill(Color.RED);
 
-        battleshipcontainer.getChildren().add(seeShips1);
-        battleshipcontainer.getChildren().add(seeShips2);
-        battleshipcontainer.getChildren().addAll(buttonSaveShipsLeft, buttonSaveShipsRight, maskleftfield, maskrightfield,
+        battleshipContainer.getChildren().add(buttonSeeShips1);
+        battleshipContainer.getChildren().add(buttonSeeShips2);
+        battleshipContainer.getChildren().addAll(buttonSaveShipsLeft, buttonSaveShipsRight, maskleftfield, maskrightfield,
                 startmenu, indicate1, indicate2);
 
-        reset.setVisible(false);
+        buttonReset.setVisible(false);
         maskleftfield.setVisible(false);
         maskrightfield.setVisible(false);
-        seeShips1.setVisible(false);
-        seeShips2.setVisible(false);
+        buttonSeeShips1.setVisible(false);
+        buttonSeeShips2.setVisible(false);
         indicate1.setVisible(false);
         indicate2.setVisible(false);
         changeMask();
@@ -214,11 +185,11 @@ public class Main extends Application
 
     private void changeMask()
     {
-        if (gameround % 2 == 1)
+        if (gameRound % 2 == 1)
         {
             maskleftfield.setVisible(false);
             maskrightfield.setVisible(true);
-        } else if (gameround % 2 == 0)
+        } else if (gameRound % 2 == 0)
         {
             maskleftfield.setVisible(true);
             maskrightfield.setVisible(false);
@@ -240,85 +211,62 @@ public class Main extends Application
         maskrightfield.setY(39 + 440 + 40);
 
 
-        battleshipcontainer.setBackground(new Background(background));
+        battleshipContainer.setBackground(new Background(background));
         drawGUI();
 
-        reset.setLayoutX(440);
-        reset.setLayoutY(10);
-        reset.setPrefHeight(10);
+        buttonReset.setLayoutX(440);
+        buttonReset.setLayoutY(10);
+        buttonReset.setPrefHeight(10);
 
-        reset.setOnAction(new EventHandler<ActionEvent>()
-        {
-
-            @Override
-            public void handle(ActionEvent event)
-            {
-                reset();
-                Scene scenel = new Scene(battleshipcontainer, 1800, 1000);
-                primaryStage.setScene(scenel);
-                primaryStage.show();
-            }
+        buttonReset.setOnAction(event -> {
+            reset();
+            Scene scenel = new Scene(battleshipContainer, 1800, 1000);
+            primaryStage.setScene(scenel);
+            primaryStage.show();
         });
-        battleshipcontainer.getChildren().add(reset);
-        newGame.setLayoutX(700);
-        newGame.setLayoutY(300);
-        newGame.setMinSize(400, 150);
+        battleshipContainer.getChildren().add(buttonReset);
+        buttonNewGame.setLayoutX(700);
+        buttonNewGame.setLayoutY(300);
+        buttonNewGame.setMinSize(400, 150);
         Font font = new Font(30);
-        newGame.setFont(font);
-        newGame.setOnAction(new EventHandler<ActionEvent>()
-                            {
-                                @Override
-                                public void handle(ActionEvent event)
-                                {
-                                    reset();
-                                    Scene scenel = new Scene(battleshipcontainer, 1800, 1000);
-                                    primaryStage.setScene(scenel);
-                                    primaryStage.show();
+        buttonNewGame.setFont(font);
+        buttonNewGame.setOnAction(event -> {
+            reset();
+            Scene scenel = new Scene(battleshipContainer, 1800, 1000);
+            primaryStage.setScene(scenel);
+            primaryStage.show();
 
-                                }
-                            }
+        }
         );
 
-        battleshipcontainer.getChildren().add(newGame);
+        battleshipContainer.getChildren().add(buttonNewGame);
 
 
-        exit.setLayoutX(700);
-        exit.setLayoutY(500);
-        exit.setMinSize(400, 150);
-        exit.setFont(font);
-        exit.setOnAction(new EventHandler<ActionEvent>()
-                         {
-                             @Override
-                             public void handle(ActionEvent event)
-                             {
-                                 System.exit(0);
-                             }
-                         }
+        buttonExit.setLayoutX(700);
+        buttonExit.setLayoutY(500);
+        buttonExit.setMinSize(400, 150);
+        buttonExit.setFont(font);
+        buttonExit.setOnAction(event -> System.exit(0)
         );
 
 
-        battleshipcontainer.getChildren().add(exit);
-        cont.setOnAction(
-                new EventHandler<ActionEvent>()
-                {
-                    @Override
-                    public void handle(ActionEvent event)
-                    {
-                        reset();
-                        reset.setVisible(false);
-                        battleshipcontainer.getChildren().add(newGame);
-                        battleshipcontainer.getChildren().add(exit);
-                        startmenu.setVisible(true);
-                        newGame.setVisible(true);
-                        exit.setVisible(true);
-                        Scene scenel = new Scene(battleshipcontainer, 1800, 1000);
-                        primaryStage.setScene(scenel);
-                        primaryStage.show();
-                    }
+        battleshipContainer.getChildren().add(buttonExit);
+        buttonContinue.setOnAction(
+                event -> {
+                    reset();
+                    buttonReset.setVisible(false);
+                    battleshipContainer.getChildren().add(buttonNewGame);
+                    battleshipContainer.getChildren().add(buttonExit);
+                    startmenu.setVisible(true);
+                    buttonNewGame.setVisible(true);
+                    buttonExit.setVisible(true);
+                    Scene scenel = new Scene(battleshipContainer, 1800, 1000);
+                    primaryStage.setScene(scenel);
+                    primaryStage.show();
                 }
         );
 
-        Scene scene = new Scene(battleshipcontainer, 1800, 1000);
+        Scene scene = new Scene(battleshipContainer, 1800, 1000);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -327,7 +275,7 @@ public class Main extends Application
     /*Wir berechnen x und y relativ zum jeweiligen spielfeld und kriegen eine zahl zwischen 0 und 9 raus.*/
     private int[] calculateXY(int imageshipx, int imageshipy, int p1x, int p1y, int p2x, int p2y)
     {
-        int result[] = new int[2];
+        int[] result = new int[2];
 
         //Checkt ob die Koordinaten vom Schiff im richtigen Feld liegen
         if (imageshipx >= p1x && imageshipx <= p2x && imageshipy >= p1y && imageshipy <= p2y)
@@ -345,7 +293,7 @@ public class Main extends Application
     }
 
 
-    private void saveShips(ImageShip imageShip[], Player player, int p1x, int p1y, int p2x, int p2y)
+    private void saveShips(ImageShip[] imageShip, Player player, int p1x, int p2x)
     {
         //System.out.println("Knopf gedrückt");
 
@@ -354,7 +302,7 @@ public class Main extends Application
         {
             if (!imageship.isDisable())
             {
-                int a[] = calculateXY(imageship.getX(), imageship.getY(), p1x, p1y, p2x, p2y);
+                int[] a = calculateXY(imageship.getX(), imageship.getY(), p1x, 560, p2x, 960);
 
                 if (a != null)
                 {
@@ -382,7 +330,7 @@ public class Main extends Application
         }
         if (player.playfield.isFleetComplete())
         {
-            gameround++;
+            gameRound++;
             if (player == player1)
             {
                 changeMask();
@@ -393,8 +341,8 @@ public class Main extends Application
             {
                 buttonSaveShipsRight.setVisible(false);
                 changeMask();
-                seeShips1.setVisible(true);
-                seeShips2.setVisible(true);
+                buttonSeeShips1.setVisible(true);
+                buttonSeeShips2.setVisible(true);
                 indicate1.setVisible(true);
 
 
@@ -409,13 +357,13 @@ public class Main extends Application
 
     private void attacks(int x, int y)
     {
-        int a[];
+        int[] a;
         if (!(player1.playfield.gameOver() || player2.playfield.gameOver()))
         {
-            if (shipscomplete)
+            if (shipsComplete)
             {
                 System.out.println("Schiffe fertig");
-                if (gameround % 2 == 1)
+                if (gameRound % 2 == 1)
                 {
                     a = calculateXY(x, y, 440 + 40, 40 + 40, 440 + 440, 440 + 40);
 
@@ -447,18 +395,18 @@ public class Main extends Application
                     {
                         System.out.println("Spieler 1 hat gewonnen");
                         deactivateMask();
-                        seeShips1.setVisible(false);
-                        seeShips2.setVisible(false);
-                        reset.setVisible(false);
-                        battleshipcontainer.getChildren().add(wonleft);
+                        buttonSeeShips1.setVisible(false);
+                        buttonSeeShips2.setVisible(false);
+                        buttonReset.setVisible(false);
+                        battleshipContainer.getChildren().add(wonleft);
                         wonleft.setX(50);
                         wonleft.setY(520);
                         winnerplay.stop();
                         winnerplay.play();
-                        battleshipcontainer.getChildren().add(cont);
-                        cont.setLayoutX(160);
-                        cont.setLayoutY(850);
-                        cont.setVisible(true);
+                        battleshipContainer.getChildren().add(buttonContinue);
+                        buttonContinue.setLayoutX(160);
+                        buttonContinue.setLayoutY(850);
+                        buttonContinue.setVisible(true);
                     }
 
                 } else
@@ -494,18 +442,18 @@ public class Main extends Application
                     {
                         System.out.println("Spieler 2 hat gewonnen");
                         deactivateMask();
-                        seeShips1.setVisible(false);
-                        seeShips2.setVisible(false);
-                        reset.setVisible(false);
-                        battleshipcontainer.getChildren().add(wonright);
+                        buttonSeeShips1.setVisible(false);
+                        buttonSeeShips2.setVisible(false);
+                        buttonReset.setVisible(false);
+                        battleshipContainer.getChildren().add(wonright);
                         wonright.setX(1450);
                         wonright.setY(520);
                         winnerplay.stop();
                         winnerplay.play();
-                        battleshipcontainer.getChildren().add(cont);
-                        cont.setLayoutX(1520);
-                        cont.setLayoutY(850);
-                        cont.setVisible(true);
+                        battleshipContainer.getChildren().add(buttonContinue);
+                        buttonContinue.setLayoutX(1520);
+                        buttonContinue.setLayoutY(850);
+                        buttonContinue.setVisible(true);
 
                     }
                 }
@@ -525,8 +473,8 @@ public class Main extends Application
         ImageView miss = new ImageView("file:res/Waterhitmarker.png");
         miss.setX(x);
         miss.setY(y);
-        battleshipcontainer.getChildren().add(miss);
-        gameround++;
+        battleshipContainer.getChildren().add(miss);
+        gameRound++;
 
     }
 
@@ -544,7 +492,7 @@ public class Main extends Application
         ImageView hit = new ImageView("file:res/Hit.png");
         hit.setX(xreal);
         hit.setY(yreal);
-        battleshipcontainer.getChildren().addAll(hit);
+        battleshipContainer.getChildren().addAll(hit);
 
 
         Image image = new Image("file:res/1x2_Ship_Destroyed.png");
@@ -593,7 +541,7 @@ public class Main extends Application
 
             /*Schiff kreiert und zum Battleshipcontainer dazugehaut und lock==true, um es nicht bewegbar zu machen*/
             imageShipl = new ImageShip(x - ship.getDivx(), y - ship.getDivy(), ship.getLength(), image);
-            battleshipcontainer.getChildren().add(imageShipl.getImageView());
+            battleshipContainer.getChildren().add(imageShipl.getImageView());
             imageShipl.rotateTo(ship.getDirection());
             imageShipl.lock();
         }
@@ -604,7 +552,7 @@ public class Main extends Application
     {
         if (player1.playfield.isFleetComplete() && player2.playfield.isFleetComplete())
         {
-            this.shipscomplete = true;
+            this.shipsComplete = true;
         }
 
     }
@@ -625,19 +573,19 @@ public class Main extends Application
         player2.playfield.removeAll();
         player1.deleteAllAttacks();
         player2.deleteAllAttacks();
-        gameround = 1;
-        shipscomplete = false;
+        gameRound = 1;
+        shipsComplete = false;
         buttonSaveShipsRight.setVisible(true);
         buttonSaveShipsLeft.setVisible(true);
-        battleshipcontainer = new Pane();
+        battleshipContainer = new Pane();
         BackgroundImage background = new BackgroundImage(new Image("file:res/BattleshipsBackground.png", 1800, 1000,
                 true, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
 
-        battleshipcontainer.setBackground(new Background(background));
+        battleshipContainer.setBackground(new Background(background));
         drawGUI();
-        battleshipcontainer.getChildren().add(reset);
-        reset.setVisible(true);
+        battleshipContainer.getChildren().add(buttonReset);
+        buttonReset.setVisible(true);
         startmenu.setVisible(false);
     }
 
