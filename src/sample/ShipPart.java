@@ -1,19 +1,21 @@
 package sample;
 
+import java.awt.*;
+
 public class ShipPart
 {
     /*Jeder Teil vom Schiff (in unserem Fall ist jeder Teil genau 40pixel lang) hat die Eigenschaften von der Klasse
     ShipPart*/
 
-    public Pixel _pixel;
+    public Point _pixel;
     private boolean damage = false;
 
-    public ShipPart(Pixel pixel)
+    public ShipPart(Point pixel)
     {
         _pixel = pixel;
 
         /*Dient der Ausgabe für uns, zum testen*/
-        System.out.printf("Schiffteil an X = %f Y = %f Schaden = %s", _pixel.getX(), _pixel.getY(), this.damage);
+        System.out.printf("Schiffteil an X = %f Y = %f Schaden = %s",_pixel.getX(), _pixel.getY(), this.damage);
     }
 
     /*ist dieser Teil vom Schiff zerstört?*/
@@ -29,10 +31,10 @@ public class ShipPart
     }
 
     public int getX() {
-       return _pixel.getX();
+       return _pixel.x;
     }
 
     public int getY() {
-       return _pixel.getY();
+       return _pixel.y;
     }
 }

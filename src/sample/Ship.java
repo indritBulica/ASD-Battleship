@@ -1,5 +1,6 @@
 package sample;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Ship
@@ -54,7 +55,7 @@ public class Ship
     {
         for (int i = 0; i < length; i++)
         {
-            ShipParts.add(new ShipPart(new Pixel(x, y)));
+            ShipParts.add(new ShipPart(new Point(x, y)));
             switch (directions)
             {
                 case UP:
