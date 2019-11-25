@@ -1,7 +1,7 @@
 package sample;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Point;
 
 public class Player
 {
