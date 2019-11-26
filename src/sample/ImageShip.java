@@ -6,13 +6,17 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 public class ImageShip {
-    private int x, y, length;
+    private int x;
+    private int y;
+    private int length;
     private int rotate = 1;
-    private int beginX, beginY;
+    private int beginX;
+    private int beginY;
     /*Wichtige Vektoren: Sind dafür da, dass die Bilder und Schiffe gleich rotiert sind und richtig liegen. Da wir es
      händisch hinein schreiben müssen, dass die "digitalen" ships (nicht die Bilder) auch rotiert sind quasi. Noch
      bestätigen, ob das stimmt bitte!!*/
-    private int diffvectorx, diffvectory;
+    private int diffvectorx;
+    private int diffvectory;
     private double startX, startY, moveX, moveY, setX, setY, newX, newY;
 
     private ImageView imageView;
@@ -30,7 +34,6 @@ public class ImageShip {
         this.y = y;
         this.beginX = this.x;
         this.beginY = this.y;
-        //System.out.println("x= " + x + "y= " + y);
         this.length = length;
         this.image = image;
         this.direction = Direction.RIGHT;
@@ -41,7 +44,6 @@ public class ImageShip {
         imageView.setY(this.y);
         this.setDiffvectorx(0);
         this.setDiffvectory(0);
-        // System.out.println("x= " + this.x + "y= " + this.y);
 
 
         imageView.addEventHandler(MouseEvent.ANY, event -> {
@@ -89,15 +91,6 @@ public class ImageShip {
                     }
                 }
                 if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton().equals(MouseButton.SECONDARY)) {
-                    /*
-                    System.out.println("echt x= " + getX() + "y= " + getY());
-                    int a[] = calculateXY(getX(), getY(), 440 + 40, 40 + 440 + 40 + 40, 440 + 440, 40 + 920);
-                    if (a != null)
-                    {
-                        System.out.println("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
-                    }
-                    */
-
                     rotate();
                 }
             }
@@ -180,7 +173,6 @@ public class ImageShip {
         this.imageView.setTranslateY(yy);
         this.x = xx + this.beginX + diffvectorx;
         this.y = yy + this.beginY + diffvectory;
-        //   System.out.println("x= " + this.x + "y= " + this.y);
     }
 
     /*Nach dem reseten, soll das Schiff wieder zum Ursprungsort zurück*/
@@ -311,6 +303,8 @@ public class ImageShip {
                     }
                 }
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + direction);
         }
         int[] a = calculateXY(getX(), getY());
         if (a != null) {

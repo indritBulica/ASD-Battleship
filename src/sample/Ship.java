@@ -11,7 +11,8 @@ public class Ship
     private int xPosition;
     private int yPosition;
     private Direction direction;
-    private int divx, divy;
+    private int divx;
+    private int divy;
 
     public int getX()
     {
