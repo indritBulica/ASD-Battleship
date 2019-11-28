@@ -13,12 +13,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.awt.*;
 import java.io.File;
 
 
 public class Main extends Application {
+    private static final Logger logger = Logger.getLogger(Main.class);
+
     private Player player1 = new Player();
     private Player player2 = new Player();
     private double pressedX;
@@ -188,6 +191,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        logger.info("Main started");
+
         BackgroundImage background = new BackgroundImage(new Image("file:res/BattleshipsBackground.png", 1800, 1000,
                 true, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
