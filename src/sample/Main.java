@@ -332,7 +332,7 @@ public class Main extends Application {
     private void attacks(int x, int y) {
         int[] a;
         if (!(player1.playfield.gameOver() || player2.playfield.gameOver()) && shipsComplete) {
-            System.out.println("Schiffe fertig");
+            logger.info("Schiffe fertig");
             if (gameRound % 2 == 1) {
                 a = calculateXY(x, y, 440 + 40, 40 + 40, 440 + 440, 440 + 40);
 
@@ -355,7 +355,7 @@ public class Main extends Application {
                     }
                 }
                 if (player2.playfield.gameOver()) {
-                    System.out.println("Spieler 1 hat gewonnen");
+                    logger.info("Spieler 1 hat gewonnen");
                     deactivateMask();
                     buttonSeeShips1.setVisible(false);
                     buttonSeeShips2.setVisible(false);
@@ -396,7 +396,7 @@ public class Main extends Application {
                     }
                 }
                 if (player1.playfield.gameOver()) {
-                    System.out.println("Spieler 2 hat gewonnen");
+                    logger.info("Spieler 2 hat gewonnen");
                     deactivateMask();
                     buttonSeeShips1.setVisible(false);
                     buttonSeeShips2.setVisible(false);
@@ -453,7 +453,7 @@ public class Main extends Application {
         Ship ship = player.playfield.isDestroyed(xx, yy);
 
         if (ship != null) {
-            System.out.println("zerstört");
+            logger.info("Schiff zerstört");
             switch (ship.getLength()) {
                 case 0:
                     break;

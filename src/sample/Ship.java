@@ -1,5 +1,7 @@
 package sample;
 
+import org.apache.log4j.Logger;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -13,6 +15,8 @@ public class Ship
     private Direction direction;
     private int divx;
     private int divy;
+    private static final Logger logger = Logger.getLogger(Main.class);
+
 
     public int getX()
     {
@@ -95,7 +99,7 @@ public class Ship
         generateShip(x, y, length, directions);
 
         /*Dient nur der Ausgabe für uns zum testen*/
-        System.out.println("ich generiere schiff an X= " + this.xPosition + " Y =" + this.yPosition + " richtung" + this.direction + " länge =" + this.length);
+        logger.info("ich generiere schiff an X= " + this.xPosition + " Y =" + this.yPosition + " richtung" + this.direction + " länge =" + this.length);
     }
 
     /*Die Schleife geht jeden part vom Schiff durch. Die if Bedienung checkt für jeden part (das macht es bei jedem
