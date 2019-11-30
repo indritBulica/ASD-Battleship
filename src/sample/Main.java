@@ -96,6 +96,7 @@ public class Main extends Application {
     private Pane battleshipContainer = new Pane();
 
     private void drawGUI() {
+        logger.info("Gui setup");
         musicplay.setCycleCount(500);
         musicplay.play();
 

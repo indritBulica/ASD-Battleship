@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import org.apache.log4j.Logger;
 
 public class ImageShip {
     private int x;
@@ -24,7 +25,7 @@ public class ImageShip {
     private Direction direction;
 
     private boolean disable = false;
-
+    private static final Logger logger = Logger.getLogger(Main.class);
 
     /*Konstruktor, mit dem wir die Schiffe in der Main (großer Block am Anfang) erstellen. Jedes Schiff hat die
     Eigenschaften und Funktionen, die hier drinnen stehen. z.B Es sind alle Schiffe automatisch nach rechts
@@ -87,7 +88,7 @@ public class ImageShip {
 
                     int[] a = calculateXY(getX(), getY());
                     if (a != null) {
-                        System.out.println("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
+                        logger.debug("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
                     }
                 }
                 if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton().equals(MouseButton.SECONDARY)) {
@@ -308,7 +309,7 @@ public class ImageShip {
         }
         int[] a = calculateXY(getX(), getY());
         if (a != null) {
-            System.out.println("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
+            logger.debug("x= " + (a[0] + 1) + "y= " + (a[1] + 1));
         }
 
 
