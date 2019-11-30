@@ -4,7 +4,8 @@
 ### IntelliJ
 
 1. Install latest JAVA SDK
-2. Install JAVA FX
+2. Download JAVA FX http://gluonhq.com/download/javafx-13.0.1-sdk-windows/
+2. Copy JAVA FX file to default Java directory - C:\Program Files\Java\
 3. Setup the Project Structure like this
 [![Project Structure](https://i.ibb.co/F8044qb/Unbenannt.png "Project Structure")](https://i.ibb.co/F8044qb/Unbenannt.png "Project Structure")
 4. Set the Run Configuration VM Options to this:
