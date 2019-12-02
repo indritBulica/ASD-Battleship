@@ -205,59 +205,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         logger.info("Main started");
 
-        Connection conn = null;
-        Statement stmt = null;
-        try {
-            // STEP 1: Register JDBC driver
-            Class.forName(JDBC_DRIVER);
-
-            //STEP 2: Open a connection
-            logger.info("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-            //STEP 3: Execute a query
-            logger.info("Creating table BShips...");
-            stmt = conn.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS BShips " +
-                    "(bid INTEGER not NULL, " +
-                    " source VARCHAR(255), " +
-                    " PRIMARY KEY ( bid ))";
-            stmt.executeUpdate(sql);
-            logger.info("Created table BShips...");
-
-            logger.info("Creating table ImageShip...");
-            String sql2 = "CREATE TABLE IF NOT EXISTS ImageShip " +
-                    "(iid INTEGER not NULL, " +
-                    " bShipId INTEGER, " +
-                    " x INTEGER, " +
-                    " y INTEGER, " +
-                    " length INTEGER, " +
-                    " PRIMARY KEY ( iid ), " +
-                    " FOREIGN KEY ( bShipId ) REFERENCES BShips( bid ))";
-            stmt.executeUpdate(sql2);
-            logger.info("Created table ImageShip...");
-
-            // STEP 4: Clean-up environment
-            stmt.close();
-            conn.close();
-        } catch(SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
-            //finally block used to close resources
-            try{
-                if(stmt!=null) stmt.close();
-            } catch(SQLException se2) {
-            } // nothing we can do
-            try {
-                if(conn!=null) conn.close();
-            } catch(SQLException se){
-                se.printStackTrace();
-            } //end finally try
-        } //end try
+        connectToDB();
 
 
         BackgroundImage background = new BackgroundImage(new Image("file:res/BattleshipsBackground.png", 1800, 1000,
@@ -328,6 +276,62 @@ public class Main extends Application {
         Scene scene = new Scene(battleshipContainer, 1800, 1000);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void connectToDB() {
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            // STEP 1: Register JDBC driver
+            Class.forName(JDBC_DRIVER);
+
+            //STEP 2: Open a connection
+            logger.info("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+            //STEP 3: Execute a query
+            logger.info("Creating table BShips...");
+            stmt = conn.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS BShips " +
+                    "(bid INTEGER not NULL, " +
+                    " source VARCHAR(255), " +
+                    " PRIMARY KEY ( bid ))";
+            stmt.executeUpdate(sql);
+            logger.info("Created table BShips...");
+
+            logger.info("Creating table ImageShip...");
+            String sql2 = "CREATE TABLE IF NOT EXISTS ImageShip " +
+                    "(iid INTEGER not NULL, " +
+                    " bShipId INTEGER, " +
+                    " x INTEGER, " +
+                    " y INTEGER, " +
+                    " length INTEGER, " +
+                    " PRIMARY KEY ( iid ), " +
+                    " FOREIGN KEY ( bShipId ) REFERENCES BShips( bid ))";
+            stmt.executeUpdate(sql2);
+            logger.info("Created table ImageShip...");
+
+            // STEP 4: Clean-up environment
+            stmt.close();
+            conn.close();
+        } catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch(Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            //finally block used to close resources
+            try{
+                if(stmt!=null) stmt.close();
+            } catch(SQLException se2) {
+            } // nothing we can do
+            try {
+                if(conn!=null) conn.close();
+            } catch(SQLException se){
+                se.printStackTrace();
+            } //end finally try
+        } //end try
     }
 
 
