@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
 import java.awt.*;
 import java.io.File;
 
-public class GameGUI {
-    private static final Logger logger = Logger.getLogger(GameGUI.class);
+public class Game {
+    private static final Logger logger = Logger.getLogger(Game.class);
     Stage primaryStage;
     private Player player1 = new Player();
     private Player player2 = new Player();
@@ -84,7 +84,7 @@ public class GameGUI {
     private Pane battleshipContainer = new Pane();
 
 
-    GameGUI(Stage primaryStage) {
+    Game(Stage primaryStage) {
         this.primaryStage = primaryStage;
         createGUI(primaryStage);
     }
