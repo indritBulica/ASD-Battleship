@@ -25,7 +25,6 @@ import java.sql.Statement;
 
 public class Main extends Application {
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "org.h2.Driver";
     static final String DB_URL = "jdbc:h2:mem:battleshipDB";
 
     //  Database credentials
@@ -293,9 +292,6 @@ public class Main extends Application {
         Connection conn = null;
 
         try {
-            // STEP 1: Register JDBC driver
-            Class.forName(JDBC_DRIVER);
-
             //STEP 2: Open a connection
             logger.info("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
