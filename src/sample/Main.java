@@ -356,7 +356,7 @@ public class Main extends Application {
 
 
     private void saveShips(ImageShip[] imageShip, Player player, int p1x, int p2x) {
-
+        logger.info("save Ships");
         /*Geht alle Schiffe duch und schaut erstmal ob */
         for (ImageShip imageship : imageShip) {
             if (!imageship.isDisable()) {
