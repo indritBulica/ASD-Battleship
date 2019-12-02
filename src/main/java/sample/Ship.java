@@ -15,7 +15,7 @@ public class Ship
     private Direction direction;
     private int divx;
     private int divy;
-    private static final Logger logger = Logger.getLogger(Main.class);
+    private static final Logger logger = Logger.getLogger(Ship.class);
 
 
     public int getX()
