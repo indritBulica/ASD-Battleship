@@ -26,7 +26,7 @@ import java.sql.Statement;
 public class Main extends Application {
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "org.h2.Driver";
-    static final String DB_URL = "jdbc:h2:tcp://localhost/~/test";
+    static final String DB_URL = "jdbc:h2:mem:battleshipDB";
 
     //  Database credentials
     static final String USER = "sa";
@@ -208,6 +208,10 @@ public class Main extends Application {
         connectToDB();
 
 
+        createGUI(primaryStage);
+    }
+
+    private void createGUI(Stage primaryStage) {
         BackgroundImage background = new BackgroundImage(new Image("file:res/BattleshipsBackground.png", 1800, 1000,
                 true, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
@@ -280,7 +284,7 @@ public class Main extends Application {
 
     private void executeDBQuery(Connection connection, String statement) throws SQLException {
         Statement stmt = connection.createStatement();
-        stmt.executeQuery(statement);
+        stmt.execute(statement);
         stmt.close();
         logger.debug("Executed SQL Query");
     }
@@ -321,6 +325,7 @@ public class Main extends Application {
             //finally block used to close resources
             try {
                 if(conn!=null) conn.close();
+                logger.debug("Closed Database.");
             } catch(SQLException se){
                 se.printStackTrace();
             } //end finally try
