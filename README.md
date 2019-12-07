@@ -18,7 +18,7 @@
 
 
 ## Settings
-###Logging
+### Logging
 > [Log4J configuration help](https://www.tutorialspoint.com/log4j/log4j_configuration.htm "Log4J configuration help")
 
 Log4j has three main components:
