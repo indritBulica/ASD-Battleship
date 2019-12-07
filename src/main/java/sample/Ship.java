@@ -99,7 +99,7 @@ public class Ship
         generateShip(x, y, length, directions);
 
         /*Dient nur der Ausgabe für uns zum testen*/
-        logger.info("ich generiere schiff an X= " + this.xPosition + " Y =" + this.yPosition + " richtung" + this.direction + " länge =" + this.length);
+        logger.debug("ich generiere schiff an X= " + this.xPosition + " Y =" + this.yPosition + " richtung" + this.direction + " länge =" + this.length);
     }
 
     /*Die Schleife geht jeden part vom Schiff durch. Die if Bedienung checkt für jeden part (das macht es bei jedem
