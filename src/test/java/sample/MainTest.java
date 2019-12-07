@@ -69,17 +69,9 @@ class MainTest {
         String DB_URL = "jdbc:h2:mem:battleshipDB";
         String USER = "sa";
         connection = DriverManager.getConnection(DB_URL, USER, "");
-        executeDBQuery(connection, "CREATE TABLE IF NOT EXISTS BShips " +
-                "(bid INTEGER not NULL, " +
-                " source VARCHAR(255), " +
-                " PRIMARY KEY ( bid ))");
+        
         assertNotNull(connection);
         connection.close();
     }
-    @Test
-    private void executeDBQuery(Connection connection, String statement) throws SQLException {
-        Statement stmt = connection.createStatement();
-        stmt.execute(statement);
-        stmt.close();
-    }
+
 }
