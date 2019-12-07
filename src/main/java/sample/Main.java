@@ -3,7 +3,6 @@ package sample;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,18 +10,20 @@ import java.sql.Statement;
 
 
 public class Main extends Application {
+    private static final Logger logger = Logger.getLogger(Main.class);
+
     // JDBC driver name and database URL
     static final String DB_URL = "jdbc:h2:mem:battleshipDB";
 
     //  Database credentials
     static final String USER = "sa";
     static final String PASS = "";
-    private static final Logger logger = Logger.getLogger(Main.class);
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        logger.info("Main started");
+        logger.info("Starting game");
+        System.out.println(new Exception());
 
         initializeDB();
         Game game = new Game(primaryStage);
@@ -40,7 +41,7 @@ public class Main extends Application {
         Connection conn = null;
         try {
             //STEP 2: Open a connection
-            logger.info("Initializing database...");
+            logger.info("Initializing database..." + conn.getClientInfo());
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             executeDBQuery(conn, "CREATE TABLE IF NOT EXISTS BShips " +
                     "(bid INTEGER not NULL, " +
@@ -61,19 +62,19 @@ public class Main extends Application {
         } catch (SQLException se) {
             //Handle errors for JDBC
             logger.error(se.getMessage());
-            logger.debug(se.getStackTrace());
+            logger.error(se.getStackTrace());
         } catch (Exception e) {
             //Handle errors for Class.forName
-            logger.error(e.getMessage());
-            logger.debug(e.getStackTrace());
+            logger.error(e.getCause());
+            logger.error(e.getStackTrace());
         } finally {
             //finally block used to close resources
             try {
                 if (conn != null) conn.close();
-                logger.debug("Closed Database.");
+                logger.debug("Closed database connection.");
             } catch (SQLException se) {
-                logger.error(se.getMessage());
-                logger.debug(se.getStackTrace());
+                logger.error(se.getSQLState());
+                logger.error(se.getStackTrace());
             } //end finally try
         } //end try
     }

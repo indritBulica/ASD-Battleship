@@ -90,7 +90,7 @@ public class Game {
     }
 
     private void drawGUI() {
-        logger.info("Gui setup");
+        logger.debug("GUI setup");
         musicplay.setCycleCount(500);
         musicplay.play();
 
@@ -418,7 +418,6 @@ public class Game {
         miss.setY(y);
         battleshipContainer.getChildren().add(miss);
         gameRound++;
-
     }
 
     /*Feuerzeichen, gerundet auf die richtige Stelle. Wenn Schiff zerstört, richtiges destroyed Schiff setzen*/
@@ -490,13 +489,14 @@ public class Game {
     private void shipsComplete() {
         if (player1.playfield.isFleetComplete() && player2.playfield.isFleetComplete()) {
             this.shipsComplete = true;
+            logger.debug("Alle chiffe wurden gesetzt.");
         }
 
     }
 
     //Für einzelne Methoden, siehe entsprechende Klassen. Canvas wird zurückgesetzt
     private void reset() {
-
+        logger.debug("Canvas wird zurückgesetzt.");
         for (int i = 0; i < imageShip0.length; i++) {
             imageShip1[i].rotateTo(Direction.RIGHT);
             imageShip0[i].rotateTo(Direction.RIGHT);
