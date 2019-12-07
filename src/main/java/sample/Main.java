@@ -3,6 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,7 +24,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         logger.info("Starting game");
-        System.out.println(new Exception());
 
         initializeDB();
         Game game = new Game(primaryStage);
@@ -78,6 +78,4 @@ public class Main extends Application {
             } //end finally try
         } //end try
     }
-
-
 }
