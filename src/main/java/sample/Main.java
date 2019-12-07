@@ -26,7 +26,7 @@ public class Main extends Application {
         logger.info("Starting game");
 
         initializeDB();
-        Game game = new Game(primaryStage);
+        new Game(primaryStage);
     }
 
 

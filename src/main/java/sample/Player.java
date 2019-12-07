@@ -6,9 +6,7 @@ import java.util.ArrayList;
 public class Player {
     Player() {
     }
-
     Field playfield = new Field();
-
     private ArrayList<Point> savedAttackPositions = new ArrayList();
 
     public void saveAttack(Point newAttackPosition) {
@@ -20,6 +18,7 @@ public class Player {
     }
 
     public void deleteAllAttacks() {
+
         this.savedAttackPositions = new ArrayList();
     }
 
