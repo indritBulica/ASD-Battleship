@@ -36,3 +36,8 @@ Possible log levels are:
 - ERROR
 - FATAL
 - ALL
+
+Default settings for the project are INFO level in console output, and DEBUG level in log file.
+### H2 Database
+The default Database will be be created as stated in the class Database for variable **DB_URL**.
+If you want to store the database file in your project path, please adapt the variable.
