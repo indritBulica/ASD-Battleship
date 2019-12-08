@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -17,49 +16,32 @@ import org.apache.log4j.Logger;
 
 import java.awt.*;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-
-public class Main extends Application {
-    // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "org.h2.Driver";
-    static final String DB_URL = "jdbc:h2:file:./battleships";
-
-    //  Database credentials
-    static final String USER = "sa";
-    static final String PASS = "";
-    private static final Logger logger = Logger.getLogger(Main.class);
-
+public class Game {
+    private static final Logger logger = Logger.getLogger(Game.class);
+    private final Database database;
+    Stage primaryStage;
     private Player player1 = new Player();
     private Player player2 = new Player();
     private double pressedX;
     private double pressedY;
     private int gameRound = 1;
     private boolean shipsComplete = false; //zu testzwecken auf true später muss auf false gestellt werden
-
     private Button buttonSaveShipsLeft = new Button("Schiffe speichern");
     private Button buttonSaveShipsRight = new Button("Schiffe Speichern");
-    //private TextField textFieldPlayerName = new TextField();
     private Button buttonNewGame = new Button("Neues Spiel");
     private Button buttonExit = new Button("EXIT");
     private Button buttonReset = new Button("Neustart");
     private Button buttonSeeShips1 = new Button("Zeige meine Schiffe");
     private Button buttonSeeShips2 = new Button("Zeige meine Schiffe");
     private Button buttonContinue = new Button("Hier gehts weiter");
-
     private ImageView startmenu = new ImageView("file:res/start.png");
     private ImageView wonleft = new ImageView("file:res/spieler1_gewonnen.png");
     private ImageView wonright = new ImageView("file:res/spieler2_gewonnen.png");
     private ImageView maskleftfield = new ImageView("file:res/Insel_Unten_1.png");
     private ImageView maskrightfield = new ImageView("file:res/Insel_Unten_2.png");
-
     private Rectangle indicate1 = new Rectangle(439, 481, 442, 7);
     private Rectangle indicate2 = new Rectangle(919, 481, 442, 7);
-
-
     private Media bomb = new Media(new File("res/bomb.wav").toURI().toString());
     private MediaPlayer bombplay = new MediaPlayer(bomb);
     private Media miss = new Media(new File("res/miss.wav").toURI().toString());
@@ -68,15 +50,12 @@ public class Main extends Application {
     private MediaPlayer musicplay = new MediaPlayer(music);
     private Media winner = new Media(new File("res/winner.wav").toURI().toString());
     private MediaPlayer winnerplay = new MediaPlayer(winner);
-
     private Image[] bships = {
             new Image("file:res/1x2_Schiff_Horizontal_1_Fertig.png"),
             new Image("file:res/1x3_Schiff_Horizontal_1_Fertig.png"),
             new Image("file:res/1x4_Schiff_Horizontal_1_Fertig.png"),
             new Image("file:res/1x5_Schiff_Horizontal_1_Fertig.png")
     };
-
-
     //Schiffe SPieler 1
     ImageShip[] imageShip1 = {
             new ImageShip(1520, 640, 2, bships[0]),
@@ -103,12 +82,17 @@ public class Main extends Application {
             new ImageShip(1800 - 1520 - 3 * 40, 800, 4, bships[2]),
             new ImageShip(1800 - 1520 - 3 * 40, 880, 5, bships[3])
     };
-
-
     private Pane battleshipContainer = new Pane();
 
+
+    Game(Stage primaryStage, Database database) {
+        this.primaryStage = primaryStage;
+        this.database = database;
+        createGUI(primaryStage);
+    }
+
     private void drawGUI() {
-        logger.info("Gui setup");
+        logger.debug("GUI setup");
         musicplay.setCycleCount(500);
         musicplay.play();
 
@@ -201,17 +185,6 @@ public class Main extends Application {
         }
     }
 
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        logger.info("Main started");
-
-        connectToDB();
-
-
-        createGUI(primaryStage);
-    }
-
     private void createGUI(Stage primaryStage) {
         BackgroundImage background = new BackgroundImage(new Image("file:res/BattleshipsBackground.png", 1800, 1000,
                 true, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -253,6 +226,7 @@ public class Main extends Application {
 
         battleshipContainer.getChildren().add(buttonNewGame);
 
+
         buttonExit.setLayoutX(700);
         buttonExit.setLayoutY(500);
         buttonExit.setMinSize(400, 150);
@@ -282,57 +256,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void executeDBQuery(Connection connection, String statement) throws SQLException {
-        Statement stmt = connection.createStatement();
-        stmt.execute(statement);
-        stmt.close();
-        logger.debug("Executed SQL Query");
-    }
-
-    private void connectToDB() {
-        Connection conn = null;
-
-        try {
-            // STEP 1: Register JDBC driver
-            Class.forName(JDBC_DRIVER);
-
-            //STEP 2: Open a connection
-            logger.info("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-            executeDBQuery(conn, "CREATE TABLE IF NOT EXISTS BShips " +
-                    "(bid INTEGER not NULL, " +
-                    " source VARCHAR(255), " +
-                    " PRIMARY KEY ( bid ))");
-            //STEP 3: Execute a query
-            executeDBQuery(conn, "CREATE TABLE IF NOT EXISTS ImageShip " +
-                    "(iid INTEGER not NULL, " +
-                    " bShipId INTEGER, " +
-                    " x INTEGER, " +
-                    " y INTEGER, " +
-                    " length INTEGER, " +
-                    " PRIMARY KEY ( iid ), " +
-                    " FOREIGN KEY ( bShipId ) REFERENCES BShips( bid ))");
-
-            // STEP 4: Clean-up environment
-            conn.close();
-        } catch(SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
-            //finally block used to close resources
-            try {
-                if(conn!=null) conn.close();
-                logger.debug("Closed Database.");
-            } catch(SQLException se){
-                se.printStackTrace();
-            } //end finally try
-        } //end try
-    }
-
-
     /*Wir berechnen x und y relativ zum jeweiligen spielfeld und kriegen eine zahl zwischen 0 und 9 raus.*/
     private int[] calculateXY(int imageshipx, int imageshipy, int p1x, int p1y, int p2x, int p2y) {
         int[] result = new int[2];
@@ -354,7 +277,7 @@ public class Main extends Application {
 
 
     private void saveShips(ImageShip[] imageShip, Player player, int p1x, int p2x) {
-        logger.info("save Ships");
+
         /*Geht alle Schiffe duch und schaut erstmal ob */
         for (ImageShip imageship : imageShip) {
             if (!imageship.isDisable()) {
@@ -375,9 +298,6 @@ public class Main extends Application {
                 }
             }
         }
-
-        //inser to db
-
         if (player.playfield.isFleetComplete()) {
             gameRound++;
             if (player == player1) {
@@ -500,7 +420,6 @@ public class Main extends Application {
         miss.setY(y);
         battleshipContainer.getChildren().add(miss);
         gameRound++;
-
     }
 
     /*Feuerzeichen, gerundet auf die richtige Stelle. Wenn Schiff zerstört, richtiges destroyed Schiff setzen*/
@@ -572,13 +491,14 @@ public class Main extends Application {
     private void shipsComplete() {
         if (player1.playfield.isFleetComplete() && player2.playfield.isFleetComplete()) {
             this.shipsComplete = true;
+            logger.debug("Alle chiffe wurden gesetzt.");
         }
 
     }
 
     //Für einzelne Methoden, siehe entsprechende Klassen. Canvas wird zurückgesetzt
     private void reset() {
-
+        logger.debug("Canvas wird zurückgesetzt.");
         for (int i = 0; i < imageShip0.length; i++) {
             imageShip1[i].rotateTo(Direction.RIGHT);
             imageShip0[i].rotateTo(Direction.RIGHT);
@@ -605,6 +525,5 @@ public class Main extends Application {
         buttonReset.setVisible(true);
         startmenu.setVisible(false);
     }
-
 
 }

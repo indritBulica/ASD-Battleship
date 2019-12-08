@@ -15,7 +15,7 @@ public class ShipPart {
         _pixel = pixel;
 
         /*Dient der Ausgabe für uns, zum testen*/
-        logger.info("Schiffteil an X = "+_pixel.getX()+ " Y = "+_pixel.getY() +" Schaden = "+this.damage);
+        logger.debug("Schiffteil an X = "+_pixel.getX()+ " Y = "+_pixel.getY() +" Schaden = "+this.damage);
     }
 
     /*ist dieser Teil vom Schiff zerstört?*/
