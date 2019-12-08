@@ -26,7 +26,7 @@ import java.sql.Statement;
 public class Main extends Application {
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "org.h2.Driver";
-    static final String DB_URL = "jdbc:h2:mem:battleshipDB";
+    static final String DB_URL = "jdbc:h2:file:./battleships";
 
     //  Database credentials
     static final String USER = "sa";
@@ -42,6 +42,7 @@ public class Main extends Application {
 
     private Button buttonSaveShipsLeft = new Button("Schiffe speichern");
     private Button buttonSaveShipsRight = new Button("Schiffe Speichern");
+    //private TextField textFieldPlayerName = new TextField();
     private Button buttonNewGame = new Button("Neues Spiel");
     private Button buttonExit = new Button("EXIT");
     private Button buttonReset = new Button("Neustart");
@@ -252,7 +253,6 @@ public class Main extends Application {
 
         battleshipContainer.getChildren().add(buttonNewGame);
 
-
         buttonExit.setLayoutX(700);
         buttonExit.setLayoutY(500);
         buttonExit.setMinSize(400, 150);
@@ -375,6 +375,9 @@ public class Main extends Application {
                 }
             }
         }
+
+        //inser to db
+
         if (player.playfield.isFleetComplete()) {
             gameRound++;
             if (player == player1) {
