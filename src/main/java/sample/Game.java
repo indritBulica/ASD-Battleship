@@ -19,6 +19,7 @@ import java.io.File;
 
 public class Game {
     private static final Logger logger = Logger.getLogger(Game.class);
+    private final Database database;
     Stage primaryStage;
     private Player player1 = new Player();
     private Player player2 = new Player();
@@ -84,8 +85,9 @@ public class Game {
     private Pane battleshipContainer = new Pane();
 
 
-    Game(Stage primaryStage) {
+    Game(Stage primaryStage, Database database) {
         this.primaryStage = primaryStage;
+        this.database = database;
         createGUI(primaryStage);
     }
 

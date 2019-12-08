@@ -11,8 +11,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
+    Point positionToCheck;
+    Point newAttackPosition;
+    ArrayList<Point> savedAttackPositions;
+
     @BeforeEach
     void setUp() {
+        positionToCheck = new Point(4,4);
+        savedAttackPositions = new ArrayList<>();
+        savedAttackPositions.add(new Point(4,4));
+        newAttackPosition = new Point(4,4);
     }
 
     @AfterEach
@@ -21,15 +29,18 @@ class PlayerTest {
 
     @Test
     void saveAttack() {
-        boolean x = false;
-        assertFalse(x);
+
+        assertTrue(this.savedAttackPositions.add(newAttackPosition));
     }
 
     @Test
     void isAttackPossible() {
+        assertTrue(this.savedAttackPositions.contains(positionToCheck));
     }
 
     @Test
     void deleteAllAttacks() {
+        this.savedAttackPositions = new ArrayList();
+        assertTrue(savedAttackPositions.isEmpty());
     }
 }
