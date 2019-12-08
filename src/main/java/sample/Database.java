@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class Database {
 
     // JDBC driver name and database URL. PLEASE change the path to your project!
-    static final String DB_URL = "jdbc:h2:~/../../Development/FH/Battleship/battleshipDB";
+    static final String DB_URL = "jdbc:h2:file:./battleships";
     // Memory DB : "jdbc:h2:mem:battleshipDB";
     //  Database credentials
     static final String USER = "sa";
