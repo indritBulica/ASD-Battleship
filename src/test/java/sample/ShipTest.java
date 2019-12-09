@@ -7,17 +7,17 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShipTest {
-private int xTest = 400;
-private int yTest = 500;
-private int lengthTest = 2;
-private Direction direction = Direction.RIGHT;
-private int divXTest = 420;
-private int divYTest = 520;
-
+    private int xTest = 400;
+    private int yTest = 500;
+    private int lengthTest = 2;
+    private Direction direction = Direction.RIGHT;
+    private int divXTest = 420;
+    private int divYTest = 520;
+    private Ship shipTest = new Ship(xTest,yTest,lengthTest,direction,divXTest,divYTest);
 
     @BeforeEach
     void setUp() {
-        Ship shipTest = new Ship(xTest,yTest,lengthTest,direction,divXTest,divYTest);
+
     }
 
     @AfterEach
@@ -26,7 +26,8 @@ private int divYTest = 520;
 
     @Test
     void getX() {
-
+        int actualX = shipTest.getX();
+        assertEquals(xTest, actualX);
     }
 
     @Test
