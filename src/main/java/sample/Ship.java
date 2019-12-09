@@ -13,8 +13,8 @@ public class Ship
     private int xPosition;
     private int yPosition;
     private Direction direction;
-    private int divx;
-    private int divy;
+    private int divX;
+    private int divY;
     private static final Logger logger = Logger.getLogger(Ship.class);
 
 
@@ -28,14 +28,14 @@ public class Ship
         return yPosition;
     }
 
-    public int getDivx()
+    public int getDivX()
     {
-        return divx;
+        return divX;
     }
 
-    public int getDivy()
+    public int getDivY()
     {
-        return divy;
+        return divY;
     }
 
     public int getLength()
@@ -87,14 +87,14 @@ public class Ship
      Also man muss mehrere Methoden "überstehen", um wirklich hier zu landen. Es wird dazwischen überprüft ob man
      setzen darf, ob Platz frei ist usw. Am Rande: Vergleichbar mit GUI am PC. Man macht was und es geht viele
      Schichten hinunter. */
-    public Ship(int x, int y, int length, Direction directions, int diffvectorx, int diffvectory)
+    public Ship(int x, int y, int length, Direction directions, int diffVectorX, int diffVectorY)
     {
         this.xPosition = x;
         this.yPosition = y;
         this.direction = directions;
         this.length = length;
-        this.divx = diffvectorx;
-        this.divy = diffvectory;
+        this.divX = diffVectorX;
+        this.divY = diffVectorY;
 
         generateShip(x, y, length, directions);
 

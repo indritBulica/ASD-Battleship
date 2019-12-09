@@ -32,6 +32,9 @@ public class Main extends Application {
     static final String PASS = "";
     private static final Logger logger = Logger.getLogger(Main.class);
 
+    private int windowSizeX = 1800;
+    private int windowSizeY = 1000;
+
     private Player player1 = new Player();
     private Player player2 = new Player();
     private double pressedX;
@@ -74,32 +77,40 @@ public class Main extends Application {
             new Image("file:res/1x5_Schiff_Horizontal_1_Fertig.png")
     };
 
+    public int fieldSize = 40;
+    private int xOffsetImageShipPlayer1 = 1520;
+    private int xOffsetImageShipPlayer2 = windowSizeX - xOffsetImageShipPlayer1 - 3 * fieldSize;
+    private int yOffsetImageShipPlayerShip2 = 640;
+    private int yOffsetImageShipPlayerShip3 = yOffsetImageShipPlayerShip2 + 2 * fieldSize;
+    private int yOffsetImageShipPlayerShip4 = yOffsetImageShipPlayerShip3 + 2 * fieldSize;
+    private int yOffsetImageShipPlayerShip5 = yOffsetImageShipPlayerShip4 + 2 * fieldSize;
 
-    //Schiffe SPieler 1
-    ImageShip[] imageShip1 = {
-            new ImageShip(1520, 640, 2, bships[0]),
-            new ImageShip(1520, 640, 2, bships[0]),
-            new ImageShip(1520, 640, 2, bships[0]),
-            new ImageShip(1520, 640, 2, bships[0]),
-            new ImageShip(1520, 720, 3, bships[1]),
-            new ImageShip(1520, 720, 3, bships[1]),
-            new ImageShip(1520, 720, 3, bships[1]),
-            new ImageShip(1520, 800, 4, bships[2]),
-            new ImageShip(1520, 800, 4, bships[2]),
-            new ImageShip(1520, 880, 5, bships[3])
+    private Image backgroundImagePrimaryStage = new Image("file:res/BattleshipsBackground.png", windowSizeX, windowSizeY,true, true);
+    //Schiffe Spieler 1
+    private ImageShip[] imageShipPlayer1 = {
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip2, 2, bships[0]),
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip2, 2, bships[0]),
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip2, 2, bships[0]),
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip2, 2, bships[0]),
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip3, 3, bships[1]),
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip3, 3, bships[1]),
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip3, 3, bships[1]),
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip4, 4, bships[2]),
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip4, 4, bships[2]),
+            new ImageShip(xOffsetImageShipPlayer1, yOffsetImageShipPlayerShip5, 5, bships[3])
     };
     //Schiffe Spieler 2
-    ImageShip[] imageShip0 = {
-            new ImageShip(1800 - 1520 - 3 * 40, 640, 2, bships[0]),
-            new ImageShip(1800 - 1520 - 3 * 40, 640, 2, bships[0]),
-            new ImageShip(1800 - 1520 - 3 * 40, 640, 2, bships[0]),
-            new ImageShip(1800 - 1520 - 3 * 40, 640, 2, bships[0]),
-            new ImageShip(1800 - 1520 - 3 * 40, 720, 3, bships[1]),
-            new ImageShip(1800 - 1520 - 3 * 40, 720, 3, bships[1]),
-            new ImageShip(1800 - 1520 - 3 * 40, 720, 3, bships[1]),
-            new ImageShip(1800 - 1520 - 3 * 40, 800, 4, bships[2]),
-            new ImageShip(1800 - 1520 - 3 * 40, 800, 4, bships[2]),
-            new ImageShip(1800 - 1520 - 3 * 40, 880, 5, bships[3])
+    private ImageShip[] imageShipPlayer2 = {
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip2, 2, bships[0]),
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip2, 2, bships[0]),
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip2, 2, bships[0]),
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip2, 2, bships[0]),
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip3, 3, bships[1]),
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip3, 3, bships[1]),
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip3, 3, bships[1]),
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip4, 4, bships[2]),
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip4, 4, bships[2]),
+            new ImageShip(xOffsetImageShipPlayer2, yOffsetImageShipPlayerShip5, 5, bships[3])
     };
 
 
@@ -110,9 +121,9 @@ public class Main extends Application {
         musicplay.setCycleCount(500);
         musicplay.play();
 
-        for (int i = 0; i < imageShip0.length; i++) {
-            battleshipContainer.getChildren().add(imageShip0[i].getImageView());
-            battleshipContainer.getChildren().add(imageShip1[i].getImageView());
+        for (int i = 0; i < imageShipPlayer2.length; i++) {
+            battleshipContainer.getChildren().add(imageShipPlayer2[i].getImageView());
+            battleshipContainer.getChildren().add(imageShipPlayer1[i].getImageView());
         }
 
         battleshipContainer.addEventHandler(MouseEvent.ANY, event -> {
@@ -129,7 +140,7 @@ public class Main extends Application {
         buttonSaveShipsLeft.setPrefSize(120, 10);
 
         buttonSaveShipsLeft.setOnAction(event -> {
-                    saveShips(imageShip0, player1, 440 + 40, 440 + 440);
+                    saveShips(imageShipPlayer2, player1, 440 + 40, 440 + 440);
                     shipsComplete();
                 }
         );
@@ -140,7 +151,7 @@ public class Main extends Application {
         buttonSaveShipsRight.setPrefSize(120, 10);
         buttonSaveShipsRight.setOnAction(
                 event -> {
-                    saveShips(imageShip1, player2, 2 * 440 + 40 + 40, 440 + 440 + 40 + 440);
+                    saveShips(imageShipPlayer1, player2, 2 * 440 + 40 + 40, 440 + 440 + 40 + 440);
                     shipsComplete();
                 }
         );
@@ -211,9 +222,8 @@ public class Main extends Application {
     }
 
     private void createGUI(Stage primaryStage) {
-        BackgroundImage background = new BackgroundImage(new Image("file:res/BattleshipsBackground.png", 1800, 1000,
-                true, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        BackgroundImage background = new BackgroundImage(backgroundImagePrimaryStage, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         maskleftfield.setX(439);
         maskleftfield.setY(39 + 440 + 40);
@@ -230,7 +240,7 @@ public class Main extends Application {
 
         buttonReset.setOnAction(event -> {
             reset();
-            Scene scenel = new Scene(battleshipContainer, 1800, 1000);
+            Scene scenel = new Scene(battleshipContainer, windowSizeX, windowSizeY);
             primaryStage.setScene(scenel);
             primaryStage.show();
         });
@@ -242,7 +252,7 @@ public class Main extends Application {
         buttonNewGame.setFont(font);
         buttonNewGame.setOnAction(event -> {
                     reset();
-                    Scene scenel = new Scene(battleshipContainer, 1800, 1000);
+                    Scene scenel = new Scene(battleshipContainer, windowSizeX, windowSizeY);
                     primaryStage.setScene(scenel);
                     primaryStage.show();
 
@@ -341,8 +351,8 @@ public class Main extends Application {
             vectorx = imageshipx - p1x;
             vectory = imageshipy - p1y;
             //Damit es eine Zahl zwischen 0 und 9 ist (denke ich!!)
-            result[0] = vectorx / 40;
-            result[1] = vectory / 40;
+            result[0] = vectorx / fieldSize;
+            result[1] = vectory / fieldSize;
             return result;
         }
         return null;
@@ -554,7 +564,7 @@ public class Main extends Application {
             }
 
             /*Schiff kreiert und zum Battleshipcontainer dazugehaut und lock==true, um es nicht bewegbar zu machen*/
-            imageShipl = new ImageShip(x - ship.getDivx(), y - ship.getDivy(), ship.getLength(), image);
+            imageShipl = new ImageShip(x - ship.getDivX(), y - ship.getDivY(), ship.getLength(), image);
             battleshipContainer.getChildren().add(imageShipl.getImageView());
             imageShipl.rotateTo(ship.getDirection());
             imageShipl.lock();
@@ -572,11 +582,11 @@ public class Main extends Application {
     //Für einzelne Methoden, siehe entsprechende Klassen. Canvas wird zurückgesetzt
     private void reset() {
 
-        for (int i = 0; i < imageShip0.length; i++) {
-            imageShip1[i].rotateTo(Direction.RIGHT);
-            imageShip0[i].rotateTo(Direction.RIGHT);
-            imageShip0[i].reset();
-            imageShip1[i].reset();
+        for (int i = 0; i < imageShipPlayer2.length; i++) {
+            imageShipPlayer1[i].rotateTo(Direction.RIGHT);
+            imageShipPlayer2[i].rotateTo(Direction.RIGHT);
+            imageShipPlayer2[i].reset();
+            imageShipPlayer1[i].reset();
 
         }
         player1.playfield.removeAll();
